@@ -52,23 +52,23 @@ namespace Maths
 
 		// Public methods
 		float DotProduct(const VectorND& v) const;
-		VectorND Opposite() const;
+		VectorND GetOpposite() const;
 		VectorND ElementWiseProduct(const VectorND& v) const;
 		float GetMagnitude() const;
 		float SquaredNorm() const;
 
 		VectorND Add(const VectorND& v) const;
-		VectorND& Add(const VectorND& v);
-		VectorND Scale(float f) const;
+		VectorND& AddEmplace(const VectorND& v);
+		VectorND Scaled(float f) const;
 		VectorND& Scale(float f);
-		VectorND Normalize() const;
+		VectorND Normalized() const;
 		VectorND& Normalize();
 
 		// Static methods
 		static VectorND MidPoint(const VectorND& p1, const VectorND& p2);
 		static float Distance(const VectorND& p1, const VectorND& p2);
 	private:
-		// private members
+		// Private members
 		std::vector<float> values;
 		unsigned int numDimension;
 	};

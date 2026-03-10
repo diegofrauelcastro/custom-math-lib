@@ -63,7 +63,7 @@ VectorND VectorND::operator-() const
 
 VectorND VectorND::operator*(float f) const
 {
-	return Scale(f);
+	return Scaled(f);
 }
 
 VectorND& VectorND::operator*=(float f)
@@ -182,7 +182,7 @@ VectorND VectorND::Add(const VectorND& v) const
 	return res;
 }
 
-VectorND& VectorND::Add(const VectorND& v)
+VectorND& VectorND::AddEmplace(const VectorND& v)
 {
 	assert(v.numDimension == numDimension);
 	for (unsigned int i = 0; i < numDimension; i++)
@@ -190,7 +190,7 @@ VectorND& VectorND::Add(const VectorND& v)
 	return *this;
 }
 
-VectorND VectorND::Scale(float f) const
+VectorND VectorND::Scaled(float f) const
 {
 	VectorND res = *this;
 	for (unsigned int i = 0; i < numDimension; i++)
@@ -205,12 +205,12 @@ VectorND& VectorND::Scale(float f)
 	return *this;
 }
 
-VectorND VectorND::Opposite() const
+VectorND VectorND::GetOpposite() const
 {
 	return -(*this);
 }
 
-VectorND VectorND::Normalize() const
+VectorND VectorND::Normalized() const
 {
 	VectorND res = *this;
 	float length = GetMagnitude();

@@ -60,30 +60,22 @@ namespace Maths
 		bool operator>(const Vector2& v) const;
 		bool operator>=(const Vector2& v) const;
 
-		// Getters 
-		float X() const;
-		float Y() const;
-
-		// Setters 
-		float& X();
-		float& Y();
-
 		// Public methods
 		float DotProduct(const Vector2& v) const;
 		float CrossProduct(const Vector2& v) const;
-		Vector2 Opposite() const;
+		Vector2 GetOpposite() const;
 		Vector2 ElementWiseProduct(const Vector2& v) const;
 		float GetMagnitude() const;
 		float Norm() const;
 		float SquaredNorm() const;
 
 		Vector2 Add(const Vector2& v) const;
-		Vector2& Add(const Vector2& v);
-		Vector2 Scale(float f) const;
+		Vector2& AddEmplace(const Vector2& v);
+		Vector2 Scaled(float f) const;
 		Vector2& Scale(float f);
-		Vector2 Normalize() const;
+		Vector2 Normalized() const;
 		Vector2& Normalize();
-		Vector2 Rotate(float radAngle, const Vector2& origin = Vector2::zero) const;
+		Vector2 Rotated(float radAngle, const Vector2& origin = Vector2::zero) const;
 		Vector2& Rotate(float radAngle, const Vector2& origin = Vector2::zero);
 
 		// Static methods

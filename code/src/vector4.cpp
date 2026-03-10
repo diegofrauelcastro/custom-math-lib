@@ -165,7 +165,7 @@ Vector4 Vector4::operator-() const
 
 Vector4 Vector4::operator*(float f) const
 {
-	return Scale(f);
+	return Scaled(f);
 }
 
 Vector4& Vector4::operator*=(float f)
@@ -247,46 +247,6 @@ bool Vector4::operator>=(const Vector4& v) const
 	return GetMagnitude() >= v.GetMagnitude();
 }
 
-float Vector4::X() const
-{
-	return x;
-}
-
-float Vector4::Y() const
-{
-	return y;
-}
-
-float Vector4::Z() const
-{
-	return z;
-}
-
-float Vector4::W() const
-{
-	return w;
-}
-
-float& Vector4::X()
-{
-	return x;
-}
-
-float& Vector4::Y()
-{
-	return y;
-}
-
-float& Vector4::Z()
-{
-	return z;
-}
-
-float& Vector4::W()
-{
-	return w;
-}
-
 float Vector4::DotProduct(const Vector4& v) const
 {
 	return x * v.x + y * v.y + z * v.z + w * v.w;
@@ -320,7 +280,7 @@ Vector4 Vector4::Add(const Vector4& v) const
 	return Vector4(x + v.x, y + v.y, z + v.z, w + v.w);
 }
 
-Vector4& Vector4::Add(const Vector4& v)
+Vector4& Vector4::AddEmplace(const Vector4& v)
 {
 	x += v.x;
 	y += v.y;
@@ -329,7 +289,7 @@ Vector4& Vector4::Add(const Vector4& v)
 	return *this;
 }
 
-Vector4 Vector4::Scale(float f) const
+Vector4 Vector4::Scaled(float f) const
 {
 	return Vector4(x * f, y * f, z * f, w * f);
 }
@@ -343,12 +303,12 @@ Vector4& Vector4::Scale(float f)
 	return *this;
 }
 
-Vector4 Vector4::Opposite() const
+Vector4 Vector4::GetOpposite() const
 {
 	return -(*this);
 }
 
-Vector4 Vector4::Normalize() const
+Vector4 Vector4::Normalized() const
 {
 	float length = GetMagnitude();
 	assert(length > 0);
@@ -389,48 +349,48 @@ void Vector4::Homogenize()
 
 std::ostream& Maths::operator<<(std::ostream& os, const Vector4& v)
 {
-	return os << v.X() << " ; " << v.Y() << " ; " << v.Z() << " ; " << v.W();
+	return os << v.x << " ; " << v.y << " ; " << v.z << " ; " << v.w;
 }
 
 std::string Maths::operator+(const std::string& str, const Vector4& v)
 {
 	std::string result = str;
 	result += "x = ";
-	result += std::to_string(v.X());
+	result += std::to_string(v.x);
 	result += ", y = ";
-	result += std::to_string(v.Y());
+	result += std::to_string(v.y);
 	result += ", z = ";
-	result += std::to_string(v.Z());
+	result += std::to_string(v.z);
 	result += ", w = ";
-	result += std::to_string(v.W());
+	result += std::to_string(v.w);
 	return result;
 }
 
 std::string& Maths::operator+=(std::string& str, const Vector4& v)
 {
 	str += "x = ";
-	str += std::to_string(v.X());
+	str += std::to_string(v.x);
 	str += ", y = ";
-	str += std::to_string(v.Y());
+	str += std::to_string(v.y);
 	str += ", z = ";
-	str += std::to_string(v.Z());
+	str += std::to_string(v.z);
 	str += ", w = ";
-	str += std::to_string(v.W());
+	str += std::to_string(v.w);
 	return str;
 }
 
 Vector4 Maths::operator*(float f, const Vector4& v)
 {
-	return Vector4(f * v.X(), f * v.Y(), f * v.Z(), f * v.W());
+	return Vector4(f * v.x, f * v.y, f * v.z, f * v.w);
 }
 
 Vector4 Maths::operator/(float f, const Vector4& v)
 {
-	assert(v.X() != 0.f);
-	assert(v.Y() != 0.f);
-	assert(v.Z() != 0.f);
-	assert(v.W() != 0.f);
-	return Vector4(f / v.X(), f / v.Y(), f / v.Z(), f / v.W());
+	assert(v.x != 0.f);
+	assert(v.y != 0.f);
+	assert(v.z != 0.f);
+	assert(v.w != 0.f);
+	return Vector4(f / v.x, f / v.y, f / v.z, f / v.w);
 }
 
 Vector4 Maths::operator+(const Vector4& v1, const Vector4& v2)

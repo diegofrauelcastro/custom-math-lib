@@ -39,19 +39,19 @@ namespace Maths
 		Vector3 GetDiagonal() const;
 		float GetTrace() const;
 		float Det() const;
-		Matrix3 Opposite() const;
+		Matrix3 GetOpposite() const;
 
-		Matrix3 Transpose() const;
+		Matrix3 Transposed() const;
 		Matrix3& Transpose();
 		Matrix3 Add(const Matrix3& m2) const;
-		Matrix3& Add(const Matrix3& m2);
-		Matrix3 Scale(float f) const;
+		Matrix3& AddEmplace(const Matrix3& m2);
+		Matrix3 Scaled(float f) const;
 		Matrix3& Scale(float f);
-		Matrix3 Multiply(const Matrix3& m2) const;
+		Matrix3 Multiplied(const Matrix3& m2) const;
 		Matrix3& Multiply(const Matrix3& m2);
 		Vector3 Multiply(const Vector3& v2) const;
 		Matrix3 GaussJordan() const;
-		Matrix3& GaussJordan();
+		Matrix3& GaussJordanEmplace();
 
 		static Matrix3 Identity();
 		static Matrix3 CreateTranslationMatrix(const Vector2& translation);

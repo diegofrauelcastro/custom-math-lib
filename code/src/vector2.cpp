@@ -128,7 +128,7 @@ Vector2 Vector2::operator-() const
 
 Vector2 Vector2::operator*(float f) const
 {
-	return Scale(f);
+	return Scaled(f);
 }
 
 Vector2& Vector2::operator*=(float f)
@@ -204,26 +204,6 @@ bool Vector2::operator>=(const Vector2& v) const
 	return GetMagnitude() >= v.GetMagnitude();
 }
 
-float Vector2::X() const
-{
-	return x;
-}
-
-float Vector2::Y() const
-{
-	return y;
-}
-
-float& Vector2::X()
-{
-	return x;
-}
-
-float& Vector2::Y()
-{
-	return y;
-}
-
 float Vector2::DotProduct(const Vector2& v) const
 {
 	return x * v.x + y * v.y;
@@ -259,14 +239,14 @@ Vector2 Vector2::Add(const Vector2& v) const
 	return Vector2(x + v.x, y + v.y);
 }
 
-Vector2& Vector2::Add(const Vector2& v)
+Vector2& Vector2::AddEmplace(const Vector2& v)
 {
 	x += v.x;
 	y += v.y;
 	return *this;
 }
 
-Vector2 Vector2::Scale(float f) const
+Vector2 Vector2::Scaled(float f) const
 {
 	return Vector2(x * f, y * f);
 }
@@ -278,12 +258,12 @@ Vector2& Vector2::Scale(float f)
 	return *this;
 }
 
-Vector2 Vector2::Opposite() const
+Vector2 Vector2::GetOpposite() const
 {
 	return -(*this);
 }
 
-Vector2 Vector2::Normalize() const
+Vector2 Vector2::Normalized() const
 {
 	float length = GetMagnitude();
 	assert(length > 0);
@@ -299,7 +279,7 @@ Vector2& Vector2::Normalize()
 	return *this;
 }
 
-Vector2 Vector2::Rotate(float radAngle, const Vector2& origin) const
+Vector2 Vector2::Rotated(float radAngle, const Vector2& origin) const
 {
 	float newX = cosf(radAngle) * (x - origin.x) - sinf(radAngle) * (y - origin.y) + origin.x;
 	float newY = sinf(radAngle) * (x - origin.x) + cosf(radAngle) * (y - origin.y) + origin.y;
@@ -346,38 +326,38 @@ float Vector2::AngleRadBetweenTwoVector2(const Vector2& v1, const Vector2& v2)
 
 std::ostream& Maths::operator<<(std::ostream& os, const Vector2& v)
 {
-	return os << v.X() << " ; " << v.Y();
+	return os << v.x << " ; " << v.y;
 }
 
 std::string Maths::operator+(const std::string& str, const Vector2& v)
 {
 	std::string result = str;
 	result += "x = ";
-	result += std::to_string(v.X());
+	result += std::to_string(v.x);
 	result += ", y = ";
-	result += std::to_string(v.Y());
+	result += std::to_string(v.y);
 	return result;
 }
 
 std::string& Maths::operator+=(std::string& str, const Vector2& v)
 {
 	str += "x = ";
-	str += std::to_string(v.X());
+	str += std::to_string(v.x);
 	str += ", y = ";
-	str += std::to_string(v.Y());
+	str += std::to_string(v.y);
 	return str;
 }
 
 Vector2 Maths::operator*(float f, const Vector2& v)
 {
-	return Vector2(f * v.X(), f * v.Y());
+	return Vector2(f * v.x, f * v.y);
 }
 
 Vector2 Maths::operator/(float f, const Vector2& v)
 {
-	assert(v.X() != 0.f);
-	assert(v.Y() != 0.f);
-	return Vector2(f / v.X(), f / v.Y());
+	assert(v.x != 0.f);
+	assert(v.y != 0.f);
+	return Vector2(f / v.x, f / v.y);
 }
 
 Vector2 Maths::operator+(const Vector2& v1, const Vector2& v2)

@@ -33,7 +33,7 @@ Matrix4::Matrix4(Vector4& line1, Vector4& line2, Vector4& line3, Vector4& line4)
 
 Matrix4 Matrix4::operator*(const Matrix4& m) const
 {
-	return Multiply(m);
+	return Multiplied(m);
 }
 
 Vector4 Matrix4::operator*(const Vector4& v) const
@@ -83,7 +83,7 @@ float Matrix4::GetTrace() const
 	return diag.x + diag.y + diag.z + diag.w;
 }
 
-Matrix4 Matrix4::Opposite() const
+Matrix4 Matrix4::GetOpposite() const
 {
 	Matrix4 tempM = *this;
 	for (int i = 0; i < 16; i++)
@@ -102,7 +102,7 @@ float Matrix4::Det() const
 	return line1 + line2 + line3 + line4 + line5 + line6;
 }
 
-Matrix4 Matrix4::Transpose() const
+Matrix4 Matrix4::Transposed() const
 {
 	Matrix4 res = Matrix4();
 	for (int i = 0; i < 4; i++)
@@ -135,14 +135,14 @@ Matrix4 Matrix4::Add(const Matrix4& m2) const
 	return res;
 }
 
-Matrix4& Matrix4::Add(const Matrix4& m2)
+Matrix4& Matrix4::AddEmplace(const Matrix4& m2)
 {
 	for (int i = 0; i < 16; i++)
 		m[i] += m2[i];
 	return *this;
 }
 
-Matrix4 Matrix4::Scale(float f) const
+Matrix4 Matrix4::Scaled(float f) const
 {
 	Matrix4 res = *this;
 	for (int i = 0; i < 16; i++)
@@ -163,7 +163,7 @@ Matrix4 Matrix4::GaussJordan() const
 	return copy.GaussJordan();
 }
 
-Matrix4& Matrix4::GaussJordan()
+Matrix4& Matrix4::GaussJordanEmplace()
 {
 	int r = -1;
 	// j is the column
@@ -262,18 +262,12 @@ Matrix4& Matrix4::Inverse()
 	return *this;
 }
 
-Matrix4 Matrix4::Inverse() const
+Matrix4 Matrix4::Inversed() const
 {
-	return (*this).GetInverse();
+	return (*this).Inversed();
 }
 
-Matrix4 Matrix4::GetInverse() const
-{
-	Matrix4 copy = *this;
-	return copy.Inverse();
-}
-
-Matrix4 Matrix4::Multiply(const Matrix4& m2) const
+Matrix4 Matrix4::Multiplied(const Matrix4& m2) const
 {
 	Matrix4 res = *this;
 	return res.Multiply(m2);

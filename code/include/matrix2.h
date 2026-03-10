@@ -40,25 +40,25 @@ namespace Maths
 		Vector2 GetDiagonal() const;
 		float GetTrace() const;
 		float Det() const;
-		Matrix2 Opposite() const;
+		Matrix2 GetOpposite() const;
 
-		Matrix2 Transpose() const;
+		Matrix2 Transposed() const;
 		Matrix2& Transpose();
 		Matrix2 Add(const Matrix2& m2) const;
-		Matrix2& Add(const Matrix2& m2);
-		Matrix2 Scale(float f) const;
+		Matrix2& AddEmplace(const Matrix2& m2);
+		Matrix2 Scaled(float f) const;
 		Matrix2& Scale(float f);
-		Matrix2 Multiply(const Matrix2& m2) const;
+		Matrix2 Multiplied(const Matrix2& m2) const;
 		Matrix2& Multiply(const Matrix2& m2);
 		Vector2 Multiply(const Vector2& v2) const;
 		Matrix2 GaussJordan() const;
-		Matrix2& GaussJordan();
+		Matrix2& GaussJordanEmplace();
 
 		// Static methods
 		static Matrix2 Identity();
 		static Matrix2 CreateScaleMatrix(const Vector2& scale);
 		static Matrix2 CreateRotationMatrix(float angle);
-		static Vector2 RotatePointAroundAnchor(float angleRad, const Vector2 p, const Vector2 anchor = Vector2(0.f, 0.f));
+		static Vector2 RotatePointAroundAnchor(float angleRad, const Vector2& p, const Vector2& anchor = Vector2(0.f, 0.f));
 	};
 
 	std::ostream& operator<<(std::ostream& os, const Matrix2& m);

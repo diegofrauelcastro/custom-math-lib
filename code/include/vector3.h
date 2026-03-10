@@ -63,30 +63,20 @@ namespace Maths
 		bool operator>(const Vector3& v) const;
 		bool operator>=(const Vector3& v) const;
 
-		// Getters 
-		float X() const;
-		float Y() const;
-		float Z() const;
-
-		// Setters 
-		float& X();
-		float& Y();
-		float& Z();
-
 		// Public methods
 		float DotProduct(const Vector3& v) const;
 		Vector3 CrossProduct(const Vector3& v) const;
-		Vector3 Opposite() const;
+		Vector3 GetOpposite() const;
 		Vector3 ElementWiseProduct(const Vector3& v) const;
 		float GetMagnitude() const;
 		float Norm() const;
 		float SquaredNorm() const;
 
 		Vector3 Add(const Vector3& v) const;
-		Vector3& Add(const Vector3& v);
-		Vector3 Scale(float f) const;
+		Vector3& AddEmplace(const Vector3& v);
+		Vector3 Scaled(float f) const;
 		Vector3& Scale(float f);
-		Vector3 Normalize() const;
+		Vector3 Normalized() const;
 		Vector3& Normalize();
 
 		// Static methods

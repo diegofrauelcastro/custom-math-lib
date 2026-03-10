@@ -54,31 +54,19 @@ namespace Maths
 		bool operator>(const Vector4& v) const;
 		bool operator>=(const Vector4& v) const;
 
-		// Getters 
-		float X() const;
-		float Y() const;
-		float Z() const;
-		float W() const;
-
-		// Setters 
-		float& X();
-		float& Y();
-		float& Z();
-		float& W();
-
 		// Public methods
 		float DotProduct(const Vector4& v) const;
-		Vector4 Opposite() const;
+		Vector4 GetOpposite() const;
 		Vector4 ElementWiseProduct(const Vector4& v) const;
 		float GetMagnitude() const;
 		float Norm() const;
 		float SquaredNorm(bool homogenize = false) const;
 
 		Vector4 Add(const Vector4& v) const;
-		Vector4& Add(const Vector4& v);
-		Vector4 Scale(float f) const;
+		Vector4& AddEmplace(const Vector4& v);
+		Vector4 Scaled(float f) const;
 		Vector4& Scale(float f);
-		Vector4 Normalize() const;
+		Vector4 Normalized() const;
 		Vector4& Normalize();
 		void Homogenize();
 

@@ -37,7 +37,7 @@ Matrix3::Matrix3(const Vector3& line1, const Vector3& line2, const Vector3& line
 
 Matrix3 Matrix3::operator*(const Matrix3& m) const
 {
-	return Multiply(m);
+	return Multiplied(m);
 }
 
 Vector3 Matrix3::operator*(const Vector3& v) const
@@ -109,7 +109,7 @@ float Matrix3::Det() const
 	return m[0] * det1 - m[1] * det2 + m[2] * det3;
 }
 
-Matrix3 Matrix3::Opposite() const
+Matrix3 Matrix3::GetOpposite() const
 {
 	Matrix3 tempM = *this;
 	for (unsigned int i = 0; i < 9; i++)
@@ -117,7 +117,7 @@ Matrix3 Matrix3::Opposite() const
 	return tempM;
 }
 
-Matrix3 Matrix3::Transpose() const
+Matrix3 Matrix3::Transposed() const
 {
 	Matrix3 res(0.f);
 	for (unsigned int i = 0; i < 3; i++)
@@ -148,14 +148,14 @@ Matrix3 Matrix3::Add(const Matrix3& m2) const
 	return res;
 }
 
-Matrix3& Matrix3::Add(const Matrix3& m2)
+Matrix3& Matrix3::AddEmplace(const Matrix3& m2)
 {
 	for (unsigned int i = 0; i < 9; i++)
 		m[i] += m2[i];
 	return *this;
 }
 
-Matrix3 Matrix3::Scale(float f) const
+Matrix3 Matrix3::Scaled(float f) const
 {
 	Matrix3 res = *this;
 	for (unsigned int i = 0; i < 9; i++)
@@ -173,10 +173,10 @@ Matrix3& Matrix3::Scale(float f)
 Matrix3 Matrix3::GaussJordan() const
 {
 	Matrix3 copy = *this;
-	return copy.GaussJordan();
+	return copy.GaussJordanEmplace();
 }
 
-Matrix3& Matrix3::GaussJordan()
+Matrix3& Matrix3::GaussJordanEmplace()
 {
 	int r = -1;
 	// j is the column
@@ -231,7 +231,7 @@ Matrix3& Matrix3::GaussJordan()
 	return *this;
 }
 
-Matrix3 Matrix3::Multiply(const Matrix3& m2) const
+Matrix3 Matrix3::Multiplied(const Matrix3& m2) const
 {
 	Matrix3 res = *this;
 	return res.Multiply(m2);

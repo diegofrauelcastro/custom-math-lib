@@ -40,7 +40,7 @@ MatrixMxN::MatrixMxN(const Maths::Matrix4& m4)
 
 MatrixMxN MatrixMxN::operator*(const MatrixMxN& m) const
 {
-	return Multiply(m);
+	return Multiplied(m);
 }
 
 VectorND MatrixMxN::operator*(const VectorND& v) const
@@ -121,7 +121,7 @@ float MatrixMxN::GetTrace() const
 	return res;
 }
 
-MatrixMxN MatrixMxN::Opposite() const
+MatrixMxN MatrixMxN::GetOpposite() const
 {
 	MatrixMxN tempM = *this;
 	for (unsigned int i = 0; i < m*n; i++)
@@ -129,7 +129,7 @@ MatrixMxN MatrixMxN::Opposite() const
 	return tempM;
 }
 
-MatrixMxN MatrixMxN::Transpose() const
+MatrixMxN MatrixMxN::Transposed() const
 {
 	MatrixMxN res(n, m, 0.f);
 	for (unsigned int i = 0; i < m; i++)
@@ -161,7 +161,7 @@ MatrixMxN MatrixMxN::Add(const MatrixMxN& m2) const
 	return res;
 }
 
-MatrixMxN& MatrixMxN::Add(const MatrixMxN& m2)
+MatrixMxN& MatrixMxN::AddEmplace(const MatrixMxN& m2)
 {
 	assert(m == m2.GetDimensions().x && n == m2.GetDimensions().y);
 	for (unsigned int i = 0; i < m*n; i++)
@@ -169,7 +169,7 @@ MatrixMxN& MatrixMxN::Add(const MatrixMxN& m2)
 	return *this;
 }
 
-MatrixMxN MatrixMxN::Scale(float f) const
+MatrixMxN MatrixMxN::Scaled(float f) const
 {
 	MatrixMxN res = *this;
 	for (unsigned int i = 0; i < m*n; i++)
@@ -187,10 +187,10 @@ MatrixMxN& MatrixMxN::Scale(float f)
 MatrixMxN MatrixMxN::GaussJordan() const
 {
 	MatrixMxN copy = *this;
-	return copy.GaussJordan();
+	return copy.GaussJordanEmplace();
 }
 
-MatrixMxN& MatrixMxN::GaussJordan()
+MatrixMxN& MatrixMxN::GaussJordanEmplace()
 {
 	int r = -1;
 	// j is the column
@@ -247,12 +247,12 @@ MatrixMxN& MatrixMxN::GaussJordan()
 
 MatrixMxN& MatrixMxN::Augment(const MatrixMxN& other)
 {
-	MatrixMxN copy = (*this).GetAugment(other);
+	MatrixMxN copy = (*this).Augmented(other);
 	(*this) = copy;
 	return *this;
 }
 
-MatrixMxN MatrixMxN::GetAugment(const MatrixMxN& other) const
+MatrixMxN MatrixMxN::Augmented(const MatrixMxN& other) const
 {
 	assert(other.m == m);
 	MatrixMxN res(m, n + other.m);
@@ -298,14 +298,14 @@ MatrixMxN& MatrixMxN::Inverse()
 	return *this;
 }
 
-MatrixMxN MatrixMxN::GetInverse() const
+MatrixMxN MatrixMxN::Inversed() const
 {
 	MatrixMxN copy = *this;
 	copy.Inverse();
 	return copy;
 }
 
-MatrixMxN MatrixMxN::Multiply(const MatrixMxN& m2) const
+MatrixMxN MatrixMxN::Multiplied(const MatrixMxN& m2) const
 {
 	MatrixMxN res = *this;
 	return res.Multiply(m2);

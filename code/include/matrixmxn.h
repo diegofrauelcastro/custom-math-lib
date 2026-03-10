@@ -44,23 +44,23 @@ namespace Maths
 		// Public methods
 		VectorND GetDiagonal() const;
 		float GetTrace() const;
-		MatrixMxN Opposite() const;
+		MatrixMxN GetOpposite() const;
 
-		MatrixMxN Transpose() const;
+		MatrixMxN Transposed() const;
 		MatrixMxN& Transpose();
 		MatrixMxN Add(const MatrixMxN& m2) const;
-		MatrixMxN& Add(const MatrixMxN& m2);
-		MatrixMxN Scale(float f) const;
+		MatrixMxN& AddEmplace(const MatrixMxN& m2);
+		MatrixMxN Scaled(float f) const;
 		MatrixMxN& Scale(float f);
-		MatrixMxN Multiply(const MatrixMxN& m2) const;
+		MatrixMxN Multiplied(const MatrixMxN& m2) const;
 		MatrixMxN& Multiply(const MatrixMxN& m2);
 		VectorND Multiply(const VectorND& v2) const;
 		MatrixMxN GaussJordan() const;
-		MatrixMxN& GaussJordan();
+		MatrixMxN& GaussJordanEmplace();
 		MatrixMxN& Augment(const MatrixMxN& other);
-		MatrixMxN GetAugment(const MatrixMxN& other) const;
+		MatrixMxN Augmented(const MatrixMxN& other) const;
 		MatrixMxN& Inverse();
-		MatrixMxN GetInverse() const;
+		MatrixMxN Inversed() const;
 
 		static MatrixMxN Identity(unsigned int _m);
 	};

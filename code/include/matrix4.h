@@ -35,22 +35,21 @@ namespace Maths
 		Vector4 GetDiagonal() const;
 		float GetTrace() const;
 		float Det() const;
-		Matrix4 Opposite() const;
+		Matrix4 GetOpposite() const;
 
-		Matrix4 Transpose() const;
+		Matrix4 Transposed() const;
 		Matrix4& Transpose();
 		Matrix4 Add(const Matrix4& m2) const;
-		Matrix4& Add(const Matrix4& m2);
-		Matrix4 Scale(float f) const;
+		Matrix4& AddEmplace(const Matrix4& m2);
+		Matrix4 Scaled(float f) const;
 		Matrix4& Scale(float f);
-		Matrix4 Multiply(const Matrix4& m2) const;
+		Matrix4 Multiplied(const Matrix4& m2) const;
 		Matrix4& Multiply(const Matrix4& m2);
 		Vector4 Multiply(const Vector4& v2) const;
 		Matrix4 GaussJordan() const;
-		Matrix4& GaussJordan();
+		Matrix4& GaussJordanEmplace();
 		Matrix4& Inverse();
-		Matrix4 Inverse() const;
-		Matrix4 GetInverse() const;
+		Matrix4 Inversed() const;
 
 		// Static methods
 		static Matrix4 Identity();

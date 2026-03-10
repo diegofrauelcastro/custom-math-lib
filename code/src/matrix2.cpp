@@ -27,7 +27,7 @@ Matrix2::Matrix2(const Vector2& line1, const Vector2& line2)
 
 Matrix2 Matrix2::operator*(const Matrix2& m) const
 {
-	return Multiply(m);
+	return Multiplied(m);
 }
 
 Vector2 Matrix2::operator*(const Vector2& v) const
@@ -92,7 +92,7 @@ float Matrix2::Det() const
 	return m[0] * m[3] - m[1] * m[2];
 }
 
-Matrix2 Matrix2::Opposite() const
+Matrix2 Matrix2::GetOpposite() const
 {
 	Matrix2 tempM = *this;
 	for (unsigned int i = 0; i < 4; i++)
@@ -100,7 +100,7 @@ Matrix2 Matrix2::Opposite() const
 	return tempM;
 }
 
-Matrix2 Matrix2::Transpose() const
+Matrix2 Matrix2::Transposed() const
 {
 	Matrix2 res(0.f);
 	for (unsigned int i = 0; i < 2; i++)
@@ -131,14 +131,14 @@ Matrix2 Matrix2::Add(const Matrix2& m2) const
 	return res;
 }
 
-Matrix2& Matrix2::Add(const Matrix2& m2)
+Matrix2& Matrix2::AddEmplace(const Matrix2& m2)
 {
 	for (unsigned int i = 0; i < 4; i++)
 		m[i] += m2[i];
 	return *this;
 }
 
-Matrix2 Matrix2::Scale(float f) const
+Matrix2 Matrix2::Scaled(float f) const
 {
 	Matrix2 res = *this;
 	for (unsigned int i = 0; i < 4; i++)
@@ -156,10 +156,10 @@ Matrix2& Matrix2::Scale(float f)
 Matrix2 Matrix2::GaussJordan() const
 {
 	Matrix2 copy = *this;
-	return copy.GaussJordan();
+	return copy.GaussJordanEmplace();
 }
 
-Matrix2& Matrix2::GaussJordan()
+Matrix2& Matrix2::GaussJordanEmplace()
 {
 	int r = -1;
 	// j is the column
@@ -214,7 +214,7 @@ Matrix2& Matrix2::GaussJordan()
 	return *this;
 }
 
-Matrix2 Matrix2::Multiply(const Matrix2& m2) const
+Matrix2 Matrix2::Multiplied(const Matrix2& m2) const
 {
 	Matrix2 res = *this;
 	return res.Multiply(m2);
@@ -286,7 +286,7 @@ Matrix2 Matrix2::CreateRotationMatrix(float angle)
 	return rotMat;
 }
 
-Vector2 Matrix2::RotatePointAroundAnchor(float angleRad, const Vector2 p, const Vector2 anchor)
+Vector2 Matrix2::RotatePointAroundAnchor(float angleRad, const Vector2& p, const Vector2& anchor)
 {
 	float x = anchor.x + cosf(angleRad) * (p.x - anchor.x) - sinf(angleRad) * (p.y - anchor.y);
 	float y = anchor.y + sinf(angleRad) * (p.x - anchor.x) + cosf(angleRad) * (p.y - anchor.y);

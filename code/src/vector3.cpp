@@ -142,7 +142,7 @@ Vector3 Vector3::operator-() const
 
 Vector3 Vector3::operator*(float f) const
 {
-	return Scale(f);
+	return Scaled(f);
 }
 
 Vector3& Vector3::operator*=(float f)
@@ -221,36 +221,6 @@ bool Vector3::operator>=(const Vector3& v) const
 	return GetMagnitude() >= v.GetMagnitude();
 }
 
-float Vector3::X() const
-{
-	return x;
-}
-
-float Vector3::Y() const
-{
-	return y;
-}
-
-float Vector3::Z() const
-{
-	return z;
-}
-
-float& Vector3::X()
-{
-	return x;
-}
-
-float& Vector3::Y()
-{
-	return y;
-}
-
-float& Vector3::Z()
-{
-	return z;
-}
-
 float Vector3::DotProduct(const Vector3& v) const
 {
 	return x * v.x + y * v.y + z * v.z;
@@ -286,7 +256,7 @@ Vector3 Vector3::Add(const Vector3& v) const
 	return Vector3(x + v.x, y + v.y, z + v.z);
 }
 
-Vector3& Vector3::Add(const Vector3& v)
+Vector3& Vector3::AddEmplace(const Vector3& v)
 {
 	x += v.x;
 	y += v.y;
@@ -294,7 +264,7 @@ Vector3& Vector3::Add(const Vector3& v)
 	return *this;
 }
 
-Vector3 Vector3::Scale(float f) const
+Vector3 Vector3::Scaled(float f) const
 {
 	return Vector3(x * f, y * f, z * f);
 }
@@ -307,12 +277,12 @@ Vector3& Vector3::Scale(float f)
 	return *this;
 }
 
-Vector3 Vector3::Opposite() const
+Vector3 Vector3::GetOpposite() const
 {
 	return -(*this);
 }
 
-Vector3 Vector3::Normalize() const
+Vector3 Vector3::Normalized() const
 {
 	float length = GetMagnitude();
 	assert(length > 0);
@@ -374,43 +344,43 @@ Vector3 Maths::Vector3::GenerateRandomOnHemisphere(const Vector3& _normal)
 
 std::ostream& Maths::operator<<(std::ostream& os, const Vector3& v)
 {
-	return os << v.X() << " ; " << v.Y() << " ; " << v.Z();
+	return os << v.x << " ; " << v.y << " ; " << v.z;
 }
 
 std::string Maths::operator+(const std::string& str, const Vector3& v)
 {
 	std::string result = str;
 	result += "x = ";
-	result += std::to_string(v.X());
+	result += std::to_string(v.x);
 	result += ", y = ";
-	result += std::to_string(v.Y());
+	result += std::to_string(v.y);
 	result += ", z = ";
-	result += std::to_string(v.Z());
+	result += std::to_string(v.z);
 	return result;
 }
 
 std::string& Maths::operator+=(std::string& str, const Vector3& v)
 {
 	str += "x = ";
-	str += std::to_string(v.X());
+	str += std::to_string(v.x);
 	str += ", y = ";
-	str += std::to_string(v.Y());
+	str += std::to_string(v.y);
 	str += ", z = ";
-	str += std::to_string(v.Z());
+	str += std::to_string(v.z);
 	return str;
 }
 
 Vector3 Maths::operator*(float f, const Vector3& v)
 {
-	return Vector3(f * v.X(), f * v.Y(), f * v.Z());
+	return Vector3(f * v.x, f * v.y, f * v.z);
 }
 
 Vector3 Maths::operator/(float f, const Vector3& v)
 {
-	assert(v.X() != 0.f);
-	assert(v.Y() != 0.f);
-	assert(v.Z() != 0.f);
-	return Vector3(f / v.X(), f / v.Y(), f / v.Z());
+	assert(v.x != 0.f);
+	assert(v.y != 0.f);
+	assert(v.z != 0.f);
+	return Vector3(f / v.x, f / v.y, f / v.z);
 }
 
 Vector3 Maths::operator+(const Vector3& v1, const Vector3& v2)
