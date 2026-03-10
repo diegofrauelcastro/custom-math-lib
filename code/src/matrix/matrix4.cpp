@@ -1,4 +1,14 @@
-#include "matrix4.h"
+#include "math3dlib.h"
+
+#include "matrix/matrix4.h"
+
+#include <vector>
+#include <cassert>
+#include <math.h>
+#include <iostream>
+#include <ostream>
+#include <sstream>
+
 using namespace Maths;
 
 Matrix4::Matrix4()
@@ -13,63 +23,63 @@ Matrix4::Matrix4(float _m[16])
 		m[i] = _m[i];
 }
 
-Matrix4::Matrix4(Vector4& line1, Vector4& line2, Vector4& line3, Vector4& line4)
+Matrix4::Matrix4(const Vector4& _line1, const Vector4& _line2, const Vector4& _line3, const Vector4& _line4)
 {
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			Vector4& currentV = line4;
+			Vector4 currentV = _line4;
 			if (i == 0)
-				currentV = line1;
+				currentV = _line1;
 			else if (i == 1)
-				currentV = line2;
+				currentV = _line2;
 			else if (i == 2)
-				currentV = line3;
+				currentV = _line3;
 			m[4 * i + j] = currentV[j];
 		}
 	}
 }
 
-Matrix4 Matrix4::operator*(const Matrix4& m) const
+Matrix4 Matrix4::operator*(const Matrix4& _m) const
 {
-	return Multiplied(m);
+	return Multiplied(_m);
 }
 
-Vector4 Matrix4::operator*(const Vector4& v) const
+Vector4 Matrix4::operator*(const Vector4& _v) const
 {
-	return Multiply(v);
+	return Multiply(_v);
 }
 
-Matrix4& Matrix4::operator=(const Matrix4& copy)
+Matrix4& Matrix4::operator=(const Matrix4& _copy)
 {
 	for (int i = 0; i < 16; i++)
-		m[i] = copy[i];
+		m[i] = _copy[i];
 	return *this;
 }
 
-float& Matrix4::operator[](int index)
+float& Matrix4::operator[](int _index)
 {
-	assert(0 <= index && index < 16);
-	return m[index];
+	assert(0 <= _index && _index < 16);
+	return m[_index];
 }
 
-float Matrix4::operator[](int index) const
+float Matrix4::operator[](int _index) const
 {
-	assert(0 <= index && index < 16);
-	return m[index];
+	assert(0 <= _index && _index < 16);
+	return m[_index];
 }
 
-float Matrix4::GetAt(unsigned int row, unsigned int col) const
+float Matrix4::GetAt(unsigned int _row, unsigned int _col) const
 {
-	assert(row < 4 && col < 4);
-	return m[row * 4 + col];
+	assert(_row < 4 && _col < 4);
+	return m[_row * 4 + _col];
 }
 
-void Matrix4::SetAt(unsigned int row, unsigned int col, float val)
+void Matrix4::SetAt(unsigned int _row, unsigned int _col, float _val)
 {
-	assert(row < 4 && col < 4);
-	m[row * 4 + col] = val;
+	assert(_row < 4 && _col < 4);
+	m[_row * 4 + _col] = _val;
 }
 
 Vector4 Matrix4::GetDiagonal() const
@@ -93,12 +103,12 @@ Matrix4 Matrix4::GetOpposite() const
 
 float Matrix4::Det() const
 {
-	float line1 = m[3]*m[6]*m[9]*m[12] + m[0]*m[5]*m[10]*m[15] - m[0]*m[5]*m[11]*m[14] - m[0]*m[6]*m[9]*m[15];
-	float line2 = m[0]*m[6]*m[11]*m[13] + m[0]*m[7]*m[9]*m[14] - m[0]*m[7]*m[10]*m[13] - m[1]*m[4]*m[10]*m[15];
-	float line3 = m[1]*m[4]*m[11]*m[14] + m[1]*m[6]*m[8]*m[15] - m[1]*m[6]*m[11]*m[12] - m[1]*m[7]*m[8]*m[14];
-	float line4 = m[1]*m[7]*m[10]*m[12] + m[2]*m[4]*m[9]*m[15] - m[2]*m[4]*m[11]*m[13] - m[2]*m[5]*m[8]*m[15];
-	float line5 = m[2]*m[5]*m[11]*m[12] + m[2]*m[7]*m[8]*m[13] - m[2]*m[7]*m[9]*m[12] - m[3]*m[4]*m[9]*m[14];
-	float line6 = m[3]*m[4]*m[10]*m[13] + m[3]*m[5]*m[8]*m[14] - m[3]*m[5]*m[10]*m[12] - m[3]*m[6]*m[8]*m[13];
+	float line1 = m[3]*m[6]*m[9]*m[12]  + m[0]*m[5]*m[10]*m[15] - m[0]*m[5]*m[11]*m[14] - m[0]*m[6]*m[9] *m[15]  ;
+	float line2 = m[0]*m[6]*m[11]*m[13] + m[0]*m[7]*m[9]*m[14]  - m[0]*m[7]*m[10]*m[13] - m[1]*m[4]*m[10]*m[15]  ;
+	float line3 = m[1]*m[4]*m[11]*m[14] + m[1]*m[6]*m[8]*m[15]  - m[1]*m[6]*m[11]*m[12] - m[1]*m[7]*m[8] *m[14]  ;
+	float line4 = m[1]*m[7]*m[10]*m[12] + m[2]*m[4]*m[9]*m[15]  - m[2]*m[4]*m[11]*m[13] - m[2]*m[5]*m[8] *m[15]  ;
+	float line5 = m[2]*m[5]*m[11]*m[12] + m[2]*m[7]*m[8]*m[13]  - m[2]*m[7]*m[9] *m[12] - m[3]*m[4]*m[9] *m[14]  ;
+	float line6 = m[3]*m[4]*m[10]*m[13] + m[3]*m[5]*m[8]*m[14]  - m[3]*m[5]*m[10]*m[12] - m[3]*m[6]*m[8] *m[13]  ;
 	return line1 + line2 + line3 + line4 + line5 + line6;
 }
 
@@ -108,9 +118,7 @@ Matrix4 Matrix4::Transposed() const
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
-		{
 			res[4*i + j] = m[4*j + i];
-		}
 	}
 	return res;
 }
@@ -127,40 +135,40 @@ Matrix4& Matrix4::Transpose()
 	return *this;
 }
 
-Matrix4 Matrix4::Add(const Matrix4& m2) const
+Matrix4 Matrix4::Add(const Matrix4& _m2) const
 {
-	Matrix4 res = m2;
+	Matrix4 res = _m2;
 	for (int i = 0; i < 16; i++)
 		res[i] += m[i];
 	return res;
 }
 
-Matrix4& Matrix4::AddEmplace(const Matrix4& m2)
+Matrix4& Matrix4::AddEmplace(const Matrix4& _m2)
 {
 	for (int i = 0; i < 16; i++)
-		m[i] += m2[i];
+		m[i] += _m2[i];
 	return *this;
 }
 
-Matrix4 Matrix4::Scaled(float f) const
+Matrix4 Matrix4::Scaled(float _f) const
 {
 	Matrix4 res = *this;
 	for (int i = 0; i < 16; i++)
-		res[i] *= f;
+		res[i] *= _f;
 	return res;
 }
 
-Matrix4& Matrix4::Scale(float f)
+Matrix4& Matrix4::Scale(float _f)
 {
 	for (int i = 0; i < 16; i++)
-		m[i] *= f;
+		m[i] *= _f;
 	return *this;
 }
 
 Matrix4 Matrix4::GaussJordan() const
 {
 	Matrix4 copy = *this;
-	return copy.GaussJordan();
+	return copy.GaussJordanEmplace();
 }
 
 Matrix4& Matrix4::GaussJordanEmplace()
@@ -264,48 +272,49 @@ Matrix4& Matrix4::Inverse()
 
 Matrix4 Matrix4::Inversed() const
 {
-	return (*this).Inversed();
+	Matrix4 inverse = *this;
+	return inverse.Inverse();
 }
 
-Matrix4 Matrix4::Multiplied(const Matrix4& m2) const
+Matrix4 Matrix4::Multiplied(const Matrix4& _m2) const
 {
 	Matrix4 res = *this;
-	return res.Multiply(m2);
+	return res.Multiply(_m2);
 }
 
-Matrix4& Matrix4::Multiply(const Matrix4& m2)
+Matrix4& Matrix4::Multiply(const Matrix4& _m2)
 {
 	Matrix4 mRes;
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
-			mRes[4*i + j] = m[4*i]*m2.m[j] + m[4*i+1]*m2.m[4+j] + m[4*i+2]*m2.m[8+j] + m[4*i+3]*m2.m[12+j];
+			mRes[4*i + j] = m[4*i]*_m2.m[j] + m[4*i+1]*_m2.m[4+j] + m[4*i+2]*_m2.m[8+j] + m[4*i+3]*_m2.m[12+j];
 	}
 	(*this) = mRes;
 	return *this;
 }
 
 
-Vector4 Matrix4::Multiply(const Vector4& v2) const
+Vector4 Matrix4::Multiply(const Vector4& _v2) const
 {
 	Vector4 vRes;
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
-			vRes[i] += v2[j] * m[4 * i + j];
+			vRes[i] += _v2[j] * m[4 * i + j];
 	}
 	return vRes;
 }
 
-std::ostream& Maths::operator<<(std::ostream& os, const Matrix4& m)
+std::ostream& Maths::operator<<(std::ostream& _os, const Matrix4& _m)
 {
 	for (int i = 0; i < 16; i++)
 	{
 		if (i % 4 == 0)
-			os << "\n";
-		os << m.m[i] << " ";
+			_os << "\n";
+		_os << _m.m[i] << " ";
 	}
-	return os;
+	return _os;
 }
 
 Matrix4 Matrix4::Identity()
@@ -316,92 +325,93 @@ Matrix4 Matrix4::Identity()
 	return id;
 }
 
-
-Matrix4 Matrix4::CreateTransformMatrix(const Vector3& rotation, const Vector3& position, const Vector3& scale)
+Matrix4 Matrix4::CreateTransformMatrix(const Vector3& _position, const Vector3& _rotationDeg, const Vector3& _scale)
 {
-	Matrix4 mTranslate = CreateTranslationMatrix(position);
-	float degToRad = PI / 180.f;
-	Matrix4 mRotationY = CreateYRotationMatrix(rotation.y * degToRad);
-	Matrix4 mRotationX = CreateXRotationMatrix(rotation.x * degToRad);
-	Matrix4 mRotationZ = CreateZRotationMatrix(rotation.z * degToRad);
-	Matrix4 mScale = CreateScaleMatrix(scale);
+	Matrix4 mTranslate = CreateTranslationMatrix(_position);
+	Matrix4 mRotationY = CreateYRotationMatrix(_rotationDeg.y);
+	Matrix4 mRotationX = CreateXRotationMatrix(_rotationDeg.x);
+	Matrix4 mRotationZ = CreateZRotationMatrix(_rotationDeg.z);
+	Matrix4 mScale = CreateScaleMatrix(_scale);
 	return mTranslate * mRotationY * mRotationX * mRotationZ * mScale;
 }
 
-Matrix4 Matrix4::CreateTranslationMatrix(const Vector3& translation)
+Matrix4 Matrix4::CreateTranslationMatrix(const Vector3& _translation)
 {
 	Matrix4 m = Matrix4::Identity();
 	for (int i = 0; i < 3; i++)
-		m[4*(i+1)-1] = translation[i];
+		m[4*(i+1)-1] = _translation[i];
 	return m;
 }
 
-Matrix4 Matrix4::CreateScaleMatrix(const Vector3& scale)
+Matrix4 Matrix4::CreateScaleMatrix(const Vector3& _scale)
 {
 	Matrix4 m = Matrix4::Identity();
 	for (int i = 0; i < 3; i++)
-		m[4*i+i] = scale[i];
+		m[4*i+i] = _scale[i];
 	return m;
 }
 
-Matrix4 Matrix4::CreateXRotationMatrix(float angle)
+Matrix4 Matrix4::CreateXRotationMatrix(float _angleDeg)
 {
+	_angleDeg *= DEG2RAD;
 	Matrix4 m = Matrix4::Identity();
-	float cosAngle = cosf(angle);
-	float sinAngle = sinf(angle);
+	float cosAngle = cosf(_angleDeg);
+	float sinAngle = sinf(_angleDeg);
 	m[5] = cosAngle; m[6] = -sinAngle;
 	m[9] = sinAngle; m[10] = cosAngle;
 	return m;
 }
 
-Matrix4 Matrix4::CreateYRotationMatrix(float angle)
+Matrix4 Matrix4::CreateYRotationMatrix(float _angleDeg)
 {
+	_angleDeg *= DEG2RAD;
 	Matrix4 m = Matrix4::Identity();
-	float cosAngle = cosf(angle);
-	float sinAngle = sinf(angle);
+	float cosAngle = cosf(_angleDeg);
+	float sinAngle = sinf(_angleDeg);
 	m[0] = cosAngle; m[2] = sinAngle;
 	m[8] = -sinAngle; m[10] = cosAngle;
 	return m;
 }
 
-Matrix4 Matrix4::CreateZRotationMatrix(float angle)
+Matrix4 Matrix4::CreateZRotationMatrix(float _angleDeg)
 {
+	_angleDeg *= DEG2RAD;
 	Matrix4 m = Matrix4::Identity();
-	float cosAngle = cosf(angle);
-	float sinAngle = sinf(angle);
+	float cosAngle = cosf(_angleDeg);
+	float sinAngle = sinf(_angleDeg);
 	m[0] = cosAngle; m[1] = -sinAngle;
 	m[4] = sinAngle; m[5] = cosAngle;
 	return m;
 }
 
-Vector3 Matrix4::RotatePointAroundThreeAxis(Vector3& anglesRadPerAxis, const Vector3& p, const Vector3 anchor)
+Vector3 Matrix4::RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector3& _p, const Vector3 _anchor)
 {
-	Vector4 vec4P(p);
-	Vector4 result = Matrix4::RotatePointAroundThreeAxis(anglesRadPerAxis, vec4P, anchor);
+	Vector4 vec4P(_p);
+	Vector4 result = Matrix4::RotatePointAroundThreeAxis(_anglesDegPerAxis, vec4P, _anchor);
 	return Vector3(result.x, result.y, result.z);
 }
 
-Vector4 Matrix4::RotatePointAroundThreeAxis(Vector3& anglesRadPerAxis, const Vector4& p, const Vector3 anchor)
+Vector4 Matrix4::RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector4& _p, const Vector3 _anchor)
 {
-	Matrix4 matX = Matrix4::CreateXRotationMatrix(anglesRadPerAxis.x);
-	Matrix4 matY = Matrix4::CreateYRotationMatrix(anglesRadPerAxis.y);
-	Matrix4 matZ = Matrix4::CreateZRotationMatrix(anglesRadPerAxis.z);
-	Matrix4 matTranslate = Matrix4::CreateTranslationMatrix(anchor);
-	Matrix4 matTranslateInverse = Matrix4::CreateTranslationMatrix(-anchor);
+	Matrix4 matX = Matrix4::CreateXRotationMatrix(_anglesDegPerAxis.x);
+	Matrix4 matY = Matrix4::CreateYRotationMatrix(_anglesDegPerAxis.y);
+	Matrix4 matZ = Matrix4::CreateZRotationMatrix(_anglesDegPerAxis.z);
+	Matrix4 matTranslate = Matrix4::CreateTranslationMatrix(_anchor);
+	Matrix4 matTranslateInverse = Matrix4::CreateTranslationMatrix(-_anchor);
 	Matrix4 rotMatOrigin = matZ * matY * matX;
 	Matrix4 rotMatAroundAnchor = matTranslate * rotMatOrigin * matTranslateInverse;
-	return rotMatAroundAnchor * p;
+	return rotMatAroundAnchor * _p;
 }
 
-Matrix4 Matrix4::GetPerspectiveMatrix(unsigned int width, unsigned int height, float near, float far, float fov) 
+Matrix4 Matrix4::GetPerspectiveMatrix(unsigned int _width, unsigned int _height, float _near, float _far, float _fovYDeg) 
 {
 	Matrix4 result;
 
-	float q = 1.0f / tan(0.5f * fov * PI / 180.f);
-	float a = q / ((float)width/height);
+	float q = 1.0f / tan(0.5f * _fovYDeg * DEG2RAD);
+	float a = q / ((float)_width/_height);
 
-	float b = (near + far) / (near - far);
-	float c = (2.0f * near * far) / (near - far);
+	float b = (_near + _far) / (_near - _far);
+	float c = (2.0f * _near * _far) / (_near - _far);
 
 	result[0] = a;
 	result[5] = q;

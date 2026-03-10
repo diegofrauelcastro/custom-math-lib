@@ -1,4 +1,14 @@
-#include "matrix3.h"
+#include "math3dlib.h"
+
+#include "matrix/matrix3.h"
+
+#include <vector>
+#include <cassert>
+#include <math.h>
+#include <iostream>
+#include <ostream>
+#include <sstream>
+
 using namespace Maths;
 
 Matrix3::Matrix3(float _m[9])
@@ -7,84 +17,84 @@ Matrix3::Matrix3(float _m[9])
 		m[i] = _m[i];
 }
 
-Matrix3::Matrix3(float f)
+Matrix3::Matrix3(float _f)
 {
 	for (int i = 0; i < 9; i++)
-		m[i] = f;
+		m[i] = _f;
 }
 
-Matrix3::Matrix3(const Matrix3& copy)
+Matrix3::Matrix3(const Matrix3& _copy)
 {
 	for (int i = 0; i < 9; i++)
-		m[i] = copy[i];
+		m[i] = _copy[i];
 }
 
-Matrix3::Matrix3(const Vector3& line1, const Vector3& line2, const Vector3& line3)
+Matrix3::Matrix3(const Vector3& _line1, const Vector3& _line2, const Vector3& _line3)
 {
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			Vector3 currentV = line3;
+			Vector3 currentV = _line3;
 			if (i == 0)
-				currentV = line1;
+				currentV = _line1;
 			else if (i == 1)
-				currentV = line2;
+				currentV = _line2;
 			SetAt(i, j, currentV[j]);
 		}
 	}
 }
 
-Matrix3 Matrix3::operator*(const Matrix3& m) const
+Matrix3 Matrix3::operator*(const Matrix3& _m) const
 {
-	return Multiplied(m);
+	return Multiplied(_m);
 }
 
-Vector3 Matrix3::operator*(const Vector3& v) const
+Vector3 Matrix3::operator*(const Vector3& _v) const
 {
-	return Multiply(v);
+	return Multiply(_v);
 }
 
-Matrix3& Matrix3::operator=(const Matrix3& copy)
+Matrix3& Matrix3::operator=(const Matrix3& _copy)
 {
 	for (int i = 0; i < 9; i++)
-		m[i] = copy[i];
+		m[i] = _copy[i];
 	return *this;
 }
 
-bool Matrix3::operator==(const Matrix3& other) const
+bool Matrix3::operator==(const Matrix3& _other) const
 {
 	bool isEqual = true;
 	for (unsigned int i = 0; i < 9 && isEqual; i++)
 	{
-		if (fabs(m[i] - other[i]) > 0.0000001f)
+		if (fabs(m[i] - _other[i]) > 0.0000001f)
 			isEqual = false;
 	}
 	return isEqual;
 }
 
-float& Matrix3::operator[](unsigned int index)
+float& Matrix3::operator[](unsigned int _index)
 {
-	assert(index < 9);
-	return m[index];
+	assert(_index < 9);
+	return m[_index];
 }
 
-float Matrix3::operator[](unsigned int index) const
+float Matrix3::operator[](unsigned int _index) const
 {
-	assert(index < 9);
-	return m[index];
+	assert(_index < 9);
+	return m[_index];
 }
 
-float Matrix3::GetAt(unsigned int row, unsigned int col) const
+float Matrix3::GetAt(unsigned int _row, unsigned int _col) const
 {
-	assert(row < 3 && col < 3);
-	return m[row * 3 + col];
+	assert(_row < 3 && _col < 3);
+	return m[_row * 3 + _col];
 }
 
-void Matrix3::SetAt(unsigned int row, unsigned int col, float val)
+void Matrix3::SetAt(unsigned int _row, unsigned int _col, float val)
 {
-	assert(row < 3 && col < 3);
-	m[row * 3 + col] = val;
+	assert(_row < 3 && _col < 3);
+	m[_row * 3 + _col] = val;
 }
 
 Vector3 Matrix3::GetDiagonal() const
@@ -140,33 +150,33 @@ Matrix3& Matrix3::Transpose()
 	return *this;
 }
 
-Matrix3 Matrix3::Add(const Matrix3& m2) const
+Matrix3 Matrix3::Add(const Matrix3& _m2) const
 {
-	Matrix3 res = m2;
+	Matrix3 res = _m2;
 	for (unsigned int i = 0; i < 9; i++)
 		res[i] = m[i] + res[i];
 	return res;
 }
 
-Matrix3& Matrix3::AddEmplace(const Matrix3& m2)
+Matrix3& Matrix3::AddEmplace(const Matrix3& _m2)
 {
 	for (unsigned int i = 0; i < 9; i++)
-		m[i] += m2[i];
+		m[i] += _m2[i];
 	return *this;
 }
 
-Matrix3 Matrix3::Scaled(float f) const
+Matrix3 Matrix3::Scaled(float _f) const
 {
 	Matrix3 res = *this;
 	for (unsigned int i = 0; i < 9; i++)
-		res[i] *= f;
+		res[i] *= _f;
 	return res;
 }
 
-Matrix3& Matrix3::Scale(float f)
+Matrix3& Matrix3::Scale(float _f)
 {
 	for (unsigned int i = 0; i < 9; i++)
-		m[i] *= f;
+		m[i] *= _f;
 	return *this;
 }
 
@@ -231,13 +241,13 @@ Matrix3& Matrix3::GaussJordanEmplace()
 	return *this;
 }
 
-Matrix3 Matrix3::Multiplied(const Matrix3& m2) const
+Matrix3 Matrix3::Multiplied(const Matrix3& _m2) const
 {
 	Matrix3 res = *this;
-	return res.Multiply(m2);
+	return res.Multiply(_m2);
 }
 
-Matrix3& Matrix3::Multiply(const Matrix3& m2)
+Matrix3& Matrix3::Multiply(const Matrix3& _m2)
 {
 	Matrix3 mRes(0.f);
 	for (unsigned int i1 = 0; i1 < 3; i1++)
@@ -246,7 +256,7 @@ Matrix3& Matrix3::Multiply(const Matrix3& m2)
 		{
 			for (unsigned int commonI = 0; commonI < 3; commonI++)
 			{
-				float resValue = GetAt(i1, commonI) * m2.GetAt(commonI, j2);
+				float resValue = GetAt(i1, commonI) * _m2.GetAt(commonI, j2);
 				mRes.SetAt(i1, j2, mRes.GetAt(i1, j2) + resValue);
 			}
 		}
@@ -255,27 +265,27 @@ Matrix3& Matrix3::Multiply(const Matrix3& m2)
 	return *this;
 }
 
-Vector3 Matrix3::Multiply(const Vector3& v2) const
+Vector3 Matrix3::Multiply(const Vector3& _v2) const
 {
 	Vector3 vRes(0.f);
 	std::vector<float> resValues;
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 3; j++)
-			vRes[i] += GetAt(i, j) * v2[j];
+			vRes[i] += GetAt(i, j) * _v2[j];
 	}
 	return vRes;
 }
 
-std::ostream& Maths::operator<<(std::ostream& os, const Matrix3& m)
+std::ostream& Maths::operator<<(std::ostream& _os, const Matrix3& _m)
 {
 	for (unsigned int i = 0; i < 9; i++)
 	{
 		if (i % 3 == 0)
-			os << "\n";
-		os << m[i] << " ";
+			_os << "\n";
+		_os << _m[i] << " ";
 	}
-	return os;
+	return _os;
 }
 
 Matrix3 Matrix3::Identity()
@@ -286,45 +296,45 @@ Matrix3 Matrix3::Identity()
 	return id;
 }
 
-Matrix3 Matrix3::CreateTranslationMatrix(const Vector2& translation)
+Matrix3 Matrix3::CreateTranslationMatrix(const Vector2& _translation)
 {
 	Matrix3 translationMat = Matrix3::Identity();
-	translationMat[2] = translation.x;
-	translationMat[5] = translation.y;
+	translationMat[2] = _translation.x;
+	translationMat[5] = _translation.y;
 	return translationMat;
 }
 
-Matrix3 Matrix3::CreateScaleMatrix(const Vector2& scale)
+Matrix3 Matrix3::CreateScaleMatrix(const Vector2& _scale)
 {
 	Matrix3 scaleMat = Matrix3::Identity();
-	scaleMat[0] = scale.x;
-	scaleMat[4] = scale.y;
+	scaleMat[0] = _scale.x;
+	scaleMat[4] = _scale.y;
 	return scaleMat;
 }
 
-Matrix3 Matrix3::CreateXRotationMatrix(float angle)
+Matrix3 Matrix3::CreateXRotationMatrix(float _angleDeg)
 {
-	angle *= PI / 180;
+	_angleDeg *= DEG2RAD;
 	Matrix3 rotMat = Matrix3::Identity();
-	rotMat[4] = cosf(angle); rotMat[5] = -sinf(angle);
-	rotMat[7] = sinf(angle); rotMat[8] = cosf(angle);
+	rotMat[4] = cosf(_angleDeg); rotMat[5] = -sinf(_angleDeg);
+	rotMat[7] = sinf(_angleDeg); rotMat[8] = cosf(_angleDeg);
 	return rotMat;
 }
 
-Matrix3 Matrix3::CreateYRotationMatrix(float angle)
+Matrix3 Matrix3::CreateYRotationMatrix(float _angleDeg)
 {
-	angle *= PI / 180;
+	_angleDeg *= DEG2RAD;
 	Matrix3 rotMat = Matrix3::Identity();
-	rotMat[0] = cosf(angle); rotMat[2] = sinf(angle);
-	rotMat[6] = -sinf(angle); rotMat[8] = cosf(angle);
+	rotMat[0] = cosf(_angleDeg); rotMat[2] = sinf(_angleDeg);
+	rotMat[6] = -sinf(_angleDeg); rotMat[8] = cosf(_angleDeg);
 	return rotMat;
 }
 
-Matrix3 Matrix3::CreateZRotationMatrix(float angle)
+Matrix3 Matrix3::CreateZRotationMatrix(float _angleDeg)
 {
-	angle *= PI / 180;
+	_angleDeg *= DEG2RAD;
 	Matrix3 rotMat = Matrix3::Identity();
-	rotMat[0] = cosf(angle); rotMat[1] = -sinf(angle);
-	rotMat[3] = sinf(angle); rotMat[4] = cosf(angle);
+	rotMat[0] = cosf(_angleDeg); rotMat[1] = -sinf(_angleDeg);
+	rotMat[3] = sinf(_angleDeg); rotMat[4] = cosf(_angleDeg);
 	return rotMat;
 }

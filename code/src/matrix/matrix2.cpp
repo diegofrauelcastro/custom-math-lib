@@ -1,4 +1,14 @@
-#include "matrix2.h"
+#include "math3dlib.h"
+
+#include "matrix/matrix2.h"
+
+#include <vector>
+#include <cassert>
+#include <math.h>
+#include <iostream>
+#include <ostream>
+#include <sstream>
+
 using namespace Maths;
 
 Matrix2::Matrix2(float _m[4])
@@ -7,74 +17,74 @@ Matrix2::Matrix2(float _m[4])
 		m[i] = _m[i];
 }
 
-Matrix2::Matrix2(float f)
+Matrix2::Matrix2(float _f)
 {
 	for (int i = 0; i < 4; i++)
-		m[i] = f;
+		m[i] = _f;
 }
 
-Matrix2::Matrix2(const Matrix2& copy)
+Matrix2::Matrix2(const Matrix2& _copy)
 {
 	for (int i = 0; i < 4; i++)
-		m[i] = copy[i];
+		m[i] = _copy[i];
 }
 
-Matrix2::Matrix2(const Vector2& line1, const Vector2& line2)
+Matrix2::Matrix2(const Vector2& _line1, const Vector2& _line2)
 {
-	m[0] = line1[0]; m[1] = line1[1];
-	m[2] = line2[0]; m[3] = line2[1];
+	m[0] = _line1[0]; m[1] = _line1[1];
+	m[2] = _line2[0]; m[3] = _line2[1];
 }
 
-Matrix2 Matrix2::operator*(const Matrix2& m) const
+Matrix2 Matrix2::operator*(const Matrix2& _m) const
 {
-	return Multiplied(m);
+	return Multiplied(_m);
 }
 
-Vector2 Matrix2::operator*(const Vector2& v) const
+Vector2 Matrix2::operator*(const Vector2& _v) const
 {
-	return Multiply(v);
+	return Multiply(_v);
 }
 
-Matrix2& Matrix2::operator=(const Matrix2& copy)
+Matrix2& Matrix2::operator=(const Matrix2& _copy)
 {
 	for (int i = 0; i < 4; i++)
-		m[i] = copy[i];
+		m[i] = _copy[i];
 	return *this;
 }
 
-bool Matrix2::operator==(const Matrix2& other) const
+bool Matrix2::operator==(const Matrix2& _other) const
 {
 	bool isEqual = true;
 	for (unsigned int i = 0; i < 4 && isEqual; i++)
 	{
-		if (fabs(m[i] - other[i]) > 0.0000001f)
+		if (fabs(m[i] - _other[i]) > 0.0000001f)
 			isEqual = false;
 	}
 	return isEqual;
 }
 
-float& Matrix2::operator[](unsigned int index)
+float& Matrix2::operator[](unsigned int _index)
 {
-	assert(index < 4);
-	return m[index];
+	assert(_index < 4);
+	return m[_index];
 }
 
-float Matrix2::operator[](unsigned int index) const
+float Matrix2::operator[](unsigned int _index) const
 {
-	assert(index < 4);
-	return m[index];
+	assert(_index < 4);
+	return m[_index];
 }
 
-float Matrix2::GetAt(unsigned int row, unsigned int col) const
+float Matrix2::GetAt(unsigned int _row, unsigned int _col) const
 {
-	assert(row < 2 && col < 2);
-	return m[row * 2 + col];
+	assert(_row < 2 && _col < 2);
+	return m[_row * 2 + _col];
 }
 
-void Matrix2::SetAt(unsigned int row, unsigned int col, float val)
+void Matrix2::SetAt(unsigned int _row, unsigned int _col, float _val)
 {
-	assert(row < 2 && col < 2);
-	m[row * 2 + col] = val;
+	assert(_row < 2 && _col < 2);
+	m[_row * 2 + _col] = _val;
 }
 
 Vector2 Matrix2::GetDiagonal() const
@@ -123,33 +133,33 @@ Matrix2& Matrix2::Transpose()
 	return *this;
 }
 
-Matrix2 Matrix2::Add(const Matrix2& m2) const
+Matrix2 Matrix2::Add(const Matrix2& _m2) const
 {
-	Matrix2 res = m2;
+	Matrix2 res = _m2;
 	for (unsigned int i = 0; i < 4; i++)
 		res[i] = m[i] + res[i];
 	return res;
 }
 
-Matrix2& Matrix2::AddEmplace(const Matrix2& m2)
+Matrix2& Matrix2::AddEmplace(const Matrix2& _m2)
 {
 	for (unsigned int i = 0; i < 4; i++)
-		m[i] += m2[i];
+		m[i] += _m2[i];
 	return *this;
 }
 
-Matrix2 Matrix2::Scaled(float f) const
+Matrix2 Matrix2::Scaled(float _f) const
 {
 	Matrix2 res = *this;
 	for (unsigned int i = 0; i < 4; i++)
-		res[i] *= f;
+		res[i] *= _f;
 	return res;
 }
 
-Matrix2& Matrix2::Scale(float f)
+Matrix2& Matrix2::Scale(float _f)
 {
 	for (unsigned int i = 0; i < 4; i++)
-		m[i] *= f;
+		m[i] *= _f;
 	return *this;
 }
 
@@ -214,13 +224,13 @@ Matrix2& Matrix2::GaussJordanEmplace()
 	return *this;
 }
 
-Matrix2 Matrix2::Multiplied(const Matrix2& m2) const
+Matrix2 Matrix2::Multiplied(const Matrix2& _m2) const
 {
 	Matrix2 res = *this;
-	return res.Multiply(m2);
+	return res.Multiply(_m2);
 }
 
-Matrix2& Matrix2::Multiply(const Matrix2& m2)
+Matrix2& Matrix2::Multiply(const Matrix2& _m2)
 {
 	Matrix2 mRes(0.f);
 	for (unsigned int i1 = 0; i1 < 2; i1++)
@@ -229,7 +239,7 @@ Matrix2& Matrix2::Multiply(const Matrix2& m2)
 		{
 			for (unsigned int commonI = 0; commonI < 2; commonI++)
 			{
-				float resValue = GetAt(i1, commonI) * m2.GetAt(commonI, j2);
+				float resValue = GetAt(i1, commonI) * _m2.GetAt(commonI, j2);
 				mRes.SetAt(i1, j2, mRes.GetAt(i1, j2) + resValue);
 			}
 		}
@@ -238,27 +248,27 @@ Matrix2& Matrix2::Multiply(const Matrix2& m2)
 	return *this;
 }
 
-Vector2 Matrix2::Multiply(const Vector2& v2) const
+Vector2 Matrix2::Multiply(const Vector2& _v2) const
 {
 	Vector2 vRes(0.f);
 	std::vector<float> resValues;
 	for (int i = 0; i < 2; i++)
 	{
 		for (int j = 0; j < 2; j++)
-			vRes[i] += GetAt(i, j) * v2[j];
+			vRes[i] += GetAt(i, j) * _v2[j];
 	}
 	return vRes;
 }
 
-std::ostream& Maths::operator<<(std::ostream& os, const Matrix2& m)
+std::ostream& Maths::operator<<(std::ostream& _os, const Matrix2& _m)
 {
 	for (unsigned int i = 0; i < 4; i++)
 	{
 		if (i % 2 == 0)
-			os << "\n";
-		os << m[i] << " ";
+			_os << "\n";
+		_os << _m[i] << " ";
 	}
-	return os;
+	return _os;
 }
 
 Matrix2 Matrix2::Identity()
@@ -269,26 +279,27 @@ Matrix2 Matrix2::Identity()
 	return id;
 }
 
-Matrix2 Matrix2::CreateScaleMatrix(const Vector2& scale)
+Matrix2 Matrix2::CreateScaleMatrix(const Vector2& _scale)
 {
 	Matrix2 scaleMat = Matrix2::Identity();
-	scaleMat[0] = scale.x;
-	scaleMat[3] = scale.y;
+	scaleMat[0] = _scale.x;
+	scaleMat[3] = _scale.y;
 	return scaleMat;
 }
 
-Matrix2 Matrix2::CreateRotationMatrix(float angle)
+Matrix2 Matrix2::CreateRotationMatrix(float _angleDeg)
 {
-	angle *= PI / 180;
+	_angleDeg *= DEG2RAD;
 	Matrix2 rotMat = Matrix2::Identity();
-	rotMat[0] = cosf(angle); rotMat[1] = -sinf(angle);
-	rotMat[2] = sinf(angle); rotMat[3] = cosf(angle);
+	rotMat[0] = cosf(_angleDeg); rotMat[1] = -sinf(_angleDeg);
+	rotMat[2] = sinf(_angleDeg); rotMat[3] = cosf(_angleDeg);
 	return rotMat;
 }
 
-Vector2 Matrix2::RotatePointAroundAnchor(float angleRad, const Vector2& p, const Vector2& anchor)
+Vector2 Matrix2::RotatePointAroundAnchor(float _angleDeg, const Vector2& _p, const Vector2& _anchor)
 {
-	float x = anchor.x + cosf(angleRad) * (p.x - anchor.x) - sinf(angleRad) * (p.y - anchor.y);
-	float y = anchor.y + sinf(angleRad) * (p.x - anchor.x) + cosf(angleRad) * (p.y - anchor.y);
+	_angleDeg *= DEG2RAD;
+	float x = _anchor.x + cosf(_angleDeg) * (_p.x - _anchor.x) - sinf(_angleDeg) * (_p.y - _anchor.y);
+	float y = _anchor.y + sinf(_angleDeg) * (_p.x - _anchor.x) + cosf(_angleDeg) * (_p.y - _anchor.y);
 	return Vector2(x, y);
 }

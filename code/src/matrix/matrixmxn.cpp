@@ -1,91 +1,101 @@
-#include "matrixmxn.h"
+#include "math3dlib.h"
+
+#include "matrix/matrixmxn.h"
+
+#include <vector>
+#include <cassert>
+#include <math.h>
+#include <iostream>
+#include <ostream>
+#include <sstream>
+
 using namespace Maths;
 
-MatrixMxN::MatrixMxN(unsigned int _m, unsigned int _n, float f)
+MatrixMxN::MatrixMxN(unsigned int _m, unsigned int _n, float _f)
 	: m(_m)
 	, n(_n)
 {
-	matrix = std::vector<float>(_m * _n, f);
+	matrix = std::vector<float>(_m * _n, _f);
 }
 
-MatrixMxN::MatrixMxN(Maths::Vector2 dimensions, float f)
-	: m(unsigned int (dimensions.x))
-	, n(unsigned int (dimensions.y))
+MatrixMxN::MatrixMxN(Maths::Vector2 _dimensions, float _f)
+	: m(unsigned int (_dimensions.x))
+	, n(unsigned int (_dimensions.y))
 {
-	matrix = std::vector<float>(m * n, f);
+	matrix = std::vector<float>(m * n, _f);
 }
 
-MatrixMxN::MatrixMxN(const MatrixMxN& copy)
-	: m(copy.m)
-	, n(copy.n)
-	, matrix(copy.matrix)
+MatrixMxN::MatrixMxN(const MatrixMxN& _copy)
+	: m(_copy.m)
+	, n(_copy.n)
+	, matrix(_copy.matrix)
 {
 }
 
-MatrixMxN::MatrixMxN(const Maths::Matrix3& m3)
+MatrixMxN::MatrixMxN(const Maths::Matrix3& _m3)
 	: m(3)
 	, n(3)
 {
 	for (int i = 0; i < 9; i++)
-		matrix.push_back(m3[i]);
+		matrix.push_back(_m3[i]);
 }
 
-MatrixMxN::MatrixMxN(const Maths::Matrix4& m4)
+MatrixMxN::MatrixMxN(const Maths::Matrix4& _m4)
 	: m(4)
 	, n(4)
 {
 	for (int i = 0; i < 16; i++)
-		matrix.push_back(m4[i]);
+		matrix.push_back(_m4[i]);
 }
 
-MatrixMxN MatrixMxN::operator*(const MatrixMxN& m) const
+MatrixMxN MatrixMxN::operator*(const MatrixMxN& _m) const
 {
-	return Multiplied(m);
+	return Multiplied(_m);
 }
 
-VectorND MatrixMxN::operator*(const VectorND& v) const
+VectorND MatrixMxN::operator*(const VectorND& _v) const
 {
-	return Multiply(v);
+	return Multiply(_v);
 }
 
-MatrixMxN& MatrixMxN::operator=(const MatrixMxN& copy)
+MatrixMxN& MatrixMxN::operator=(const MatrixMxN& _copy)
 {
-	m = copy.m;
-	n = copy.n;
-	matrix = copy.matrix;
+	m = _copy.m;
+	n = _copy.n;
+	matrix = _copy.matrix;
 	return *this;
 }
 
-bool MatrixMxN::operator==(const MatrixMxN& other) const
+bool MatrixMxN::operator==(const MatrixMxN& _other) const
 {
-	if (m != other.m || n != other.n)
+	if (m != _other.m || n != _other.n)
 		return false;
 
 	bool isEqual = true;
 	for (unsigned int i = 0; i < m * n && isEqual; i++)
 	{
-		if (fabs(matrix[i] - other[i]) > 0.000001f)
+		if (fabs(matrix[i] - _other[i]) > 0.000001f)
 			isEqual = false;
 	}
 	return isEqual;
 }
 
-float& MatrixMxN::operator[](unsigned int index)
+float& MatrixMxN::operator[](unsigned int _index)
 {
-	assert(index < m * n);
-	return matrix[index];
+	assert(_index < m * n);
+	return matrix[_index];
 }
 
-float MatrixMxN::operator[](unsigned int index) const
+float MatrixMxN::operator[](unsigned int _index) const
 {
-	assert(index < m * n);
-	return matrix[index];
+	assert(_index < m * n);
+	return matrix[_index];
 }
 
-float MatrixMxN::GetAt(unsigned int row, unsigned int col) const
+float MatrixMxN::GetAt(unsigned int _row, unsigned int _col) const
 {
-	assert(row < m && col < n);
-	return matrix[row * n + col];
+	assert(_row < m && _col < n);
+	return matrix[_row * n + _col];
 }
 
 Vector2 MatrixMxN::GetDimensions() const
@@ -93,10 +103,10 @@ Vector2 MatrixMxN::GetDimensions() const
 	return Vector2((float)m, (float)n);
 }
 
-void MatrixMxN::SetAt(unsigned int row, unsigned int col, float val)
+void MatrixMxN::SetAt(unsigned int _row, unsigned int _col, float _val)
 {
-	assert(row < m && col < n);
-	matrix[row * n + col] = val;
+	assert(_row < m && _col < n);
+	matrix[_row * n + _col] = _val;
 }
 
 VectorND MatrixMxN::GetDiagonal() const
@@ -152,35 +162,35 @@ MatrixMxN& MatrixMxN::Transpose()
 	return *this;
 }
 
-MatrixMxN MatrixMxN::Add(const MatrixMxN& m2) const
+MatrixMxN MatrixMxN::Add(const MatrixMxN& _m2) const
 {
-	assert(m == m2.GetDimensions().x && n == m2.GetDimensions().y);
-	MatrixMxN res = m2;
+	assert(m == _m2.GetDimensions().x && n == _m2.GetDimensions().y);
+	MatrixMxN res = _m2;
 	for (unsigned int i = 0; i < m*n; i++)
 		res[i] = matrix[i] + res[i];
 	return res;
 }
 
-MatrixMxN& MatrixMxN::AddEmplace(const MatrixMxN& m2)
+MatrixMxN& MatrixMxN::AddEmplace(const MatrixMxN& _m2)
 {
-	assert(m == m2.GetDimensions().x && n == m2.GetDimensions().y);
+	assert(m == _m2.GetDimensions().x && n == _m2.GetDimensions().y);
 	for (unsigned int i = 0; i < m*n; i++)
-		matrix[i] += m2[i];
+		matrix[i] += _m2[i];
 	return *this;
 }
 
-MatrixMxN MatrixMxN::Scaled(float f) const
+MatrixMxN MatrixMxN::Scaled(float _f) const
 {
 	MatrixMxN res = *this;
 	for (unsigned int i = 0; i < m*n; i++)
-		res[i] *= f;
+		res[i] *= _f;
 	return res;
 }
 
-MatrixMxN& MatrixMxN::Scale(float f)
+MatrixMxN& MatrixMxN::Scale(float _f)
 {
 	for (unsigned int i = 0; i < m*n; i++)
-		matrix[i] *= f;
+		matrix[i] *= _f;
 	return *this;
 }
 
@@ -245,23 +255,23 @@ MatrixMxN& MatrixMxN::GaussJordanEmplace()
 	return *this;
 }
 
-MatrixMxN& MatrixMxN::Augment(const MatrixMxN& other)
+MatrixMxN& MatrixMxN::Augment(const MatrixMxN& _other)
 {
-	MatrixMxN copy = (*this).Augmented(other);
+	MatrixMxN copy = (*this).Augmented(_other);
 	(*this) = copy;
 	return *this;
 }
 
-MatrixMxN MatrixMxN::Augmented(const MatrixMxN& other) const
+MatrixMxN MatrixMxN::Augmented(const MatrixMxN& _other) const
 {
-	assert(other.m == m);
-	MatrixMxN res(m, n + other.m);
+	assert(_other.m == m);
+	MatrixMxN res(m, n + _other.m);
 	for (unsigned int row = 0; row < m; row++)
 	{
 		for (unsigned int col = 0; col < n; col++)
 			res.SetAt(row, col, GetAt(row, col));
-		for (unsigned int colOther = 0; colOther < other.n; colOther++)
-			res.SetAt(row, n + colOther, other.GetAt(row, colOther));
+		for (unsigned int colOther = 0; colOther < _other.n; colOther++)
+			res.SetAt(row, n + colOther, _other.GetAt(row, colOther));
 	}
 	return res;
 }
@@ -305,24 +315,24 @@ MatrixMxN MatrixMxN::Inversed() const
 	return copy;
 }
 
-MatrixMxN MatrixMxN::Multiplied(const MatrixMxN& m2) const
+MatrixMxN MatrixMxN::Multiplied(const MatrixMxN& _m2) const
 {
 	MatrixMxN res = *this;
-	return res.Multiply(m2);
+	return res.Multiply(_m2);
 }
 
-MatrixMxN& MatrixMxN::Multiply(const MatrixMxN& m2)
+MatrixMxN& MatrixMxN::Multiply(const MatrixMxN& _m2)
 {
-	Vector2 m2Dim = m2.GetDimensions();
+	Vector2 m2Dim = _m2.GetDimensions();
 	assert(n == m2Dim.x);
 	MatrixMxN mRes(m, int(m2Dim.y));
 	for (unsigned int i1 = 0; i1 < m; i1++)
 	{
-		for (unsigned int j2 = 0; j2 < m2.n; j2++)
+		for (unsigned int j2 = 0; j2 < _m2.n; j2++)
 		{
 			for (unsigned int commonI = 0; commonI < n; commonI++)
 			{
-				float resValue = GetAt(i1, commonI) * m2.GetAt(commonI, j2);
+				float resValue = GetAt(i1, commonI) * _m2.GetAt(commonI, j2);
 				mRes.SetAt(i1, j2, mRes.GetAt(i1, j2) + resValue);
 			}
 		}
@@ -332,28 +342,28 @@ MatrixMxN& MatrixMxN::Multiply(const MatrixMxN& m2)
 }
 
 
-VectorND MatrixMxN::Multiply(const VectorND& v2) const
+VectorND MatrixMxN::Multiply(const VectorND& _v2) const
 {
-	assert(n == v2.GetDimension());
-	VectorND vRes(v2.GetDimension());
+	assert(n == _v2.GetDimension());
+	VectorND vRes(_v2.GetDimension());
 	std::vector<float> resValues;
 	for (unsigned int i = 0; i < m; i++)
 	{
 		for (unsigned int j = 0; j < n; j++)
-			vRes[j] += GetAt(i, j) * v2[j];
+			vRes[j] += GetAt(i, j) * _v2[j];
 	}
 	return vRes;
 }
 
-std::ostream& Maths::operator<<(std::ostream& os, const MatrixMxN& m)
+std::ostream& Maths::operator<<(std::ostream& _os, const MatrixMxN& _m)
 {
-	for (unsigned int i = 0; i < m.GetDimensions().x*m.GetDimensions().y; i++)
+	for (unsigned int i = 0; i < _m.GetDimensions().x*_m.GetDimensions().y; i++)
 	{
-		if (i % int(m.GetDimensions().y) == 0)
-			os << "\n";
-		os << m[i] << " ";
+		if (i % int(_m.GetDimensions().y) == 0)
+			_os << "\n";
+		_os << _m[i] << " ";
 	}
-	return os;
+	return _os;
 }
 
 MatrixMxN MatrixMxN::Identity(unsigned int _m)
