@@ -300,16 +300,14 @@ Matrix4& Matrix4::Multiply(const Matrix4& _m2)
 	return *this;
 }
 
-
-Vector4 Matrix4::Multiply(const Vector4& _v2) const
+Vector4 Matrix4::Multiply(const Vector4& v) const
 {
-	Vector4 vRes;
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-			vRes[i] += _v2[j] * m[4 * i + j];
-	}
-	return vRes;
+	return Vector4(
+		m[0] * v[0] + m[1] * v[1] + m[2] * v[2] + m[3] * v[3],
+		m[4] * v[0] + m[5] * v[1] + m[6] * v[2] + m[7] * v[3],
+		m[8] * v[0] + m[9] * v[1] + m[10] * v[2] + m[11] * v[3],
+		m[12] * v[0] + m[13] * v[1] + m[14] * v[2] + m[15] * v[3]
+	);
 }
 
 std::ostream& Maths::operator<<(std::ostream& _os, const Matrix4& _m)

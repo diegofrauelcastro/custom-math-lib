@@ -269,6 +269,29 @@ TEST(Matrix4, MultiplyByMatOperator)
     ExpectMatrix4Near(mManualResult, mRes);
 }
 
+TEST(Matrix4, MultiplyByVectorOperator)
+{
+    Vector4 v1 = { 0.f, 5.f, 1.5f, 0.25f };
+    Matrix4 m1;
+    m1.m[0] = 1.f;
+    m1.m[1] = 2.f;
+    m1.m[2] = -0.5f;
+    m1.m[3] = 1.5f;
+    m1.m[14] = -1.5f;
+    m1.m[15] = 6.2f;
+
+    float newX = m1.m[0] * v1.x + m1.m[1] * v1.y + m1.m[2] * v1.z + m1.m[3] * v1.w;
+    float newY = m1.m[4] * v1.x + m1.m[5] * v1.y + m1.m[6] * v1.z + m1.m[7] * v1.w;
+    float newZ = m1.m[8] * v1.x + m1.m[9] * v1.y + m1.m[10] * v1.z + m1.m[11] * v1.w;
+    float newW = m1.m[12] * v1.x + m1.m[13] * v1.y + m1.m[14] * v1.z + m1.m[15] * v1.w;
+    Vector4 vRes = m1 * v1;
+
+    EXPECT_FLOAT_EQ(newX, vRes.x);
+    EXPECT_FLOAT_EQ(newY, vRes.y);
+    EXPECT_FLOAT_EQ(newZ, vRes.z);
+    EXPECT_FLOAT_EQ(newW, vRes.w);
+}
+
 TEST(Matrix4, MultiplyByMat)
 {
     Matrix4 m1;
@@ -312,13 +335,11 @@ TEST(Matrix4, MultiplyByVector)
     m1.m[14] = -1.5f;
     m1.m[15] = 6.2f;
 
-    float newX = m1.m[0] * v1.x + m1.m[1] * v1.y; + m1.m[2] * v1.z + m1.m[3] * v1.w;
-    float newY = m1.m[4] * v1.x + m1.m[5] * v1.y; + m1.m[6] * v1.z + m1.m[7] * v1.w;
-    float newZ = m1.m[8] * v1.x + m1.m[9] * v1.y; + m1.m[10] * v1.z + m1.m[11] * v1.w;
-    float newW = m1.m[12] * v1.x + m1.m[13] * v1.y; + m1.m[14] * v1.z + m1.m[15] * v1.w;
+    float newX = m1.m[0] * v1.x + m1.m[1] * v1.y + m1.m[2] * v1.z + m1.m[3] * v1.w;
+    float newY = m1.m[4] * v1.x + m1.m[5] * v1.y + m1.m[6] * v1.z + m1.m[7] * v1.w;
+    float newZ = m1.m[8] * v1.x + m1.m[9] * v1.y + m1.m[10] * v1.z + m1.m[11] * v1.w;
+    float newW = m1.m[12] * v1.x + m1.m[13] * v1.y + m1.m[14] * v1.z + m1.m[15] * v1.w;
     Vector4 vRes = m1.Multiply(v1);
-    std::cout << vRes << std::endl;
-    std::cout << newX << " ; " << newY << " ; " << newZ << " ; " << newW << std::endl;
 
     EXPECT_FLOAT_EQ(newX, vRes.x);
     EXPECT_FLOAT_EQ(newY, vRes.y);
@@ -340,6 +361,22 @@ TEST(Matrix4, ScaleMatrix)
     mManualResult.m[5] = scaleY;
     mManualResult.m[10] = scaleZ;
     mManualResult.m[15] = 1.f;
+
+    ExpectMatrix4Near(mManualResult, m1);
+}
+
+TEST(Matrix4, TranslationMatrix)
+{
+    float posX = 1.f;
+    float posY = 5.f;
+    float posZ = -2.5f;
+    Matrix4 m1(Matrix4::CreateTranslationMatrix({ posX, posY, posZ }));
+
+    Matrix4 mManualResult;
+    mManualResult[3] = posX;
+    mManualResult[7] = posY;
+    mManualResult[11] = posZ;
+    mManualResult[0] = 1.f; mManualResult[5] = 1.f; mManualResult[10] = 1.f; mManualResult[15] = 1.f;
 
     ExpectMatrix4Near(mManualResult, m1);
 }

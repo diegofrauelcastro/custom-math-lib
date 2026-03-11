@@ -55,15 +55,15 @@ namespace Maths
 
 		// Static methods
 		static Matrix4 Identity();
-		static Matrix4 CreateTransformMatrix(const Vector3& _position, const Vector3& _rotationDeg, const Vector3& _scale);
+		static Matrix4 CreateTransformMatrix(const Vector3& _position, const Vector3& _rotationDeg, const Vector3& _scale);		// REMAINS UNTESTED
 		static Matrix4 CreateTranslationMatrix(const Vector3& _translation);
 		static Matrix4 CreateScaleMatrix(const Vector3& _scale);
-		static Matrix4 CreateXRotationMatrix(float _angleDeg);
-		static Matrix4 CreateYRotationMatrix(float _angleDeg);
-		static Matrix4 CreateZRotationMatrix(float _angleDeg);
-		static Vector3 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector3& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));
-		static Vector4 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector4& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));
-		static Matrix4 GetPerspectiveMatrix(unsigned int _width, unsigned int _height, float _near, float _far, float _fovYDeg);
+		static Matrix4 CreateXRotationMatrix(float _angleDeg);		// REMAINS UNTESTED
+		static Matrix4 CreateYRotationMatrix(float _angleDeg);		// REMAINS UNTESTED
+		static Matrix4 CreateZRotationMatrix(float _angleDeg);		// REMAINS UNTESTED
+		static Vector3 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector3& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));	// REMAINS UNTESTED
+		static Vector4 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector4& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));	// REMAINS UNTESTED
+		static Matrix4 GetPerspectiveMatrix(unsigned int _width, unsigned int _height, float _near, float _far, float _fovYDeg);					// REMAINS UNTESTED
 	};
 
 	std::ostream& operator<<(std::ostream& _os, const Matrix4& _m);
