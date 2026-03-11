@@ -321,6 +321,89 @@ TEST(Matrix3, MultiplyByVector)
     EXPECT_FLOAT_EQ(newZ, vRes.z);
 }
 
+TEST(Matrix3, CreateTranslationMatrix)
+{
+    Vector2 t(3.f, -2.f);
+
+    Matrix3 m = Matrix3::CreateTranslationMatrix(t);
+
+    Matrix3 mManualResult;
+
+    mManualResult.m[0] = 1.f; mManualResult.m[1] = 0.f; mManualResult.m[2] = t.x;
+    mManualResult.m[3] = 0.f; mManualResult.m[4] = 1.f; mManualResult.m[5] = t.y;
+    mManualResult.m[6] = 0.f; mManualResult.m[7] = 0.f; mManualResult.m[8] = 1.f;
+
+    ExpectMatrix3Near(mManualResult, m);
+}
+
+TEST(Matrix3, CreateScaleMatrix)
+{
+    Vector2 s = { 2.f, 3.f };
+    Matrix3 m = Matrix3::CreateScaleMatrix(s);
+
+    Matrix3 mManualResult;
+
+    mManualResult.m[0] = s.x; mManualResult.m[1] = 0.f; mManualResult.m[2] = 0.f;
+    mManualResult.m[3] = 0.f; mManualResult.m[4] = s.y; mManualResult.m[5] = 0.f;
+    mManualResult.m[6] = 0.f; mManualResult.m[7] = 0.f; mManualResult.m[8] = 1.f;
+
+    ExpectMatrix3Near(mManualResult, m);
+}
+
+TEST(Matrix3, CreateXRotationMatrix)
+{
+    float angleDeg = 90.f;
+
+    Matrix3 m = Matrix3::CreateXRotationMatrix(angleDeg);
+
+    float c = cosf(angleDeg * DEG2RAD);
+    float s = sinf(angleDeg * DEG2RAD);
+
+    Matrix3 mManualResult;
+
+    mManualResult.m[0] = 1.f; mManualResult.m[1] = 0.f; mManualResult.m[2] = 0.f;
+    mManualResult.m[3] = 0.f; mManualResult.m[4] = c;   mManualResult.m[5] = -s;
+    mManualResult.m[6] = 0.f; mManualResult.m[7] = s;   mManualResult.m[8] = c;
+
+    ExpectMatrix3Near(mManualResult, m);
+}
+
+TEST(Matrix3, CreateYRotationMatrix)
+{
+    float angleDeg = 90.f;
+
+    Matrix3 m = Matrix3::CreateYRotationMatrix(angleDeg);
+
+    float c = cosf(angleDeg * DEG2RAD);
+    float s = sinf(angleDeg * DEG2RAD);
+
+    Matrix3 mManualResult;
+
+    mManualResult.m[0] = c;   mManualResult.m[1] = 0.f; mManualResult.m[2] = s;
+    mManualResult.m[3] = 0.f; mManualResult.m[4] = 1.f; mManualResult.m[5] = 0.f;
+    mManualResult.m[6] = -s;  mManualResult.m[7] = 0.f; mManualResult.m[8] = c;
+
+    ExpectMatrix3Near(mManualResult, m);
+}
+
+TEST(Matrix3, CreateZRotationMatrix)
+{
+    float angleDeg = 90.f;
+
+    Matrix3 m = Matrix3::CreateZRotationMatrix(angleDeg);
+
+    float c = cosf(angleDeg * DEG2RAD);
+    float s = sinf(angleDeg * DEG2RAD);
+
+    Matrix3 mManualResult;
+
+    mManualResult.m[0] = c;   mManualResult.m[1] = -s;  mManualResult.m[2] = 0.f;
+    mManualResult.m[3] = s;   mManualResult.m[4] = c;   mManualResult.m[5] = 0.f;
+    mManualResult.m[6] = 0.f; mManualResult.m[7] = 0.f; mManualResult.m[8] = 1.f;
+
+    ExpectMatrix3Near(mManualResult, m);
+}
+
 TEST(Matrix3, Print)
 {
     Matrix3 m1;
