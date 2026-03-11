@@ -406,9 +406,9 @@ float Quaternion::Distance(const Quaternion& _p1, const Quaternion& _p2)
 	return (_p2 - _p1).GetMagnitude();
 }
 
-std::ostream& Maths::operator<<(std::ostream& os, const Quaternion& _v)
+std::ostream& Maths::operator<<(std::ostream& _os, const Quaternion& _v)
 {
-	return os << _v.w << " + " << _v.x << "i + " << _v.y << "j + " << _v.z << "k";
+	return _os << _v.w << " + " << _v.x << "i + " << _v.y << "j + " << _v.z << "k";
 }
 
 std::string Maths::operator+(const std::string& _str, const Quaternion& _v)
