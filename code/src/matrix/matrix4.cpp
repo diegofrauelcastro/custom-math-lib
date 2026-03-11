@@ -41,6 +41,12 @@ Matrix4::Matrix4(const Vector4& _line1, const Vector4& _line2, const Vector4& _l
 	}
 }
 
+Maths::Matrix4::Matrix4(const Matrix4& _copy)
+{
+	for (int i = 0; i < 16; i++)
+		m[i] = _copy.m[i];
+}
+
 Matrix4 Matrix4::operator*(const Matrix4& _m) const
 {
 	return Multiplied(_m);

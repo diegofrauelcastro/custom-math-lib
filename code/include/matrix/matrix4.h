@@ -16,6 +16,7 @@ namespace Maths
 		Matrix4();
 		Matrix4(float _m[16]);
 		Matrix4(const Vector4& _line1, const Vector4& _line2, const Vector4& _line3, const Vector4& _line4);
+		Matrix4(const Matrix4& _copy);
 		// Destructor
 		~Matrix4() = default;
 
@@ -47,8 +48,8 @@ namespace Maths
 		Matrix4 Multiplied(const Matrix4& _m2) const;
 		Matrix4& Multiply(const Matrix4& _m2);
 		Vector4 Multiply(const Vector4& _v2) const;
-		Matrix4 GaussJordan() const;
-		Matrix4& GaussJordanEmplace();
+		Matrix4 GaussJordan() const;		// REMAINS UNTESTED
+		Matrix4& GaussJordanEmplace();		// REMAINS UNTESTED
 		Matrix4& Inverse();
 		Matrix4 Inversed() const;
 
