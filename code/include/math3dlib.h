@@ -26,4 +26,5 @@ namespace Maths
 	constexpr float CUBE_ROOT2 = 1.2599210498f;
 	constexpr float GOLDEN_RATIO = 1.6180339887f;
 	constexpr float LN2 = 0.6931471805f;
+	constexpr float EPS = 1e-5f;
 }

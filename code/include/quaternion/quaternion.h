@@ -2,6 +2,8 @@
 
 #include "vector/vector3.h"
 
+#include <string>
+
 namespace Maths
 {
 	class Quaternion

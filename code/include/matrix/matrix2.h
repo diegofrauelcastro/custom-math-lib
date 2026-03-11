@@ -49,8 +49,8 @@ namespace Maths
 		Matrix2 Multiplied(const Matrix2& _m2) const;
 		Matrix2& Multiply(const Matrix2& _m2);
 		Vector2 Multiply(const Vector2& _v2) const;
-		Matrix2 GaussJordan() const;
-		Matrix2& GaussJordanEmplace();
+		Matrix2 GaussJordan() const;		// REMAINS UNTESTED
+		Matrix2& GaussJordanEmplace();		// REMAINS UNTESTED
 
 		// Static methods
 		static Matrix2 Identity();
