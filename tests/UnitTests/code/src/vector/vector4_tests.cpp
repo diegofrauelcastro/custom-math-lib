@@ -373,26 +373,36 @@ TEST(Vector4, OperatorDivideEqual)
 
 TEST(Vector4, OperatorIncrement)
 {
-	Vector4 v(1.f, 2.f, 3.f, 4.f);
+	Vector4 v(2.f, 0.f, 0.f, 0.f); // length = 2
+	float originalLength = v.GetMagnitude();
 
 	v++;
 
-	EXPECT_FLOAT_EQ(v.x, 2.f);
-	EXPECT_FLOAT_EQ(v.y, 3.f);
-	EXPECT_FLOAT_EQ(v.z, 4.f);
-	EXPECT_FLOAT_EQ(v.w, 5.f);
+	float newLength = v.GetMagnitude();
+
+	EXPECT_NEAR(newLength, originalLength + 1.f, EPS);
+
+	EXPECT_NEAR(v.x / newLength, 1.f, EPS);
+	EXPECT_NEAR(v.y / newLength, 0.f, EPS);
+	EXPECT_NEAR(v.z / newLength, 0.f, EPS);
+	EXPECT_NEAR(v.w / newLength, 0.f, EPS);
 }
 
 TEST(Vector4, OperatorDecrement)
 {
-	Vector4 v(1.f, 2.f, 3.f, 4.f);
+	Vector4 v(2.f, 0.f, 0.f, 0.f); // length = 2
+	float originalLength = v.GetMagnitude();
 
 	v--;
 
-	EXPECT_FLOAT_EQ(v.x, 0.f);
-	EXPECT_FLOAT_EQ(v.y, 1.f);
-	EXPECT_FLOAT_EQ(v.z, 2.f);
-	EXPECT_FLOAT_EQ(v.w, 3.f);
+	float newLength = v.GetMagnitude();
+
+	EXPECT_NEAR(newLength, originalLength - 1.f, EPS);
+
+	EXPECT_NEAR(v.x / newLength, 1.f, EPS);
+	EXPECT_NEAR(v.y / newLength, 0.f, EPS);
+	EXPECT_NEAR(v.z / newLength, 0.f, EPS);
+	EXPECT_NEAR(v.w / newLength, 0.f, EPS);
 }
 
 TEST(Vector4, ComparisonOperators)
