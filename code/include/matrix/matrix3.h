@@ -50,8 +50,8 @@ namespace Maths
 		Matrix3 Multiplied(const Matrix3& _m2) const;
 		Matrix3& Multiply(const Matrix3& _m2);
 		Vector3 Multiply(const Vector3& _v2) const;
-		Matrix3 GaussJordan() const;
-		Matrix3& GaussJordanEmplace();
+		Matrix3 GaussJordan() const;		// REMAINS UNTESTED
+		Matrix3& GaussJordanEmplace();		// REMAINS UNTESTED
 
 		static Matrix3 Identity();
 		static Matrix3 CreateTranslationMatrix(const Vector2& _translation);

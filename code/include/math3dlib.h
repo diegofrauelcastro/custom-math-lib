@@ -18,7 +18,7 @@
 namespace Maths
 {
 	constexpr float PI = 3.141592653589793f;
-	constexpr float DEG2RAD = 114.592f;
+	constexpr float DEG2RAD = 0.01745329251f;
 	constexpr float RAD2DEG = 57.296f;
 	constexpr float EXP = 2.7182818284f;
 	constexpr float SQRT2 = 1.4142135623f;
@@ -26,4 +26,6 @@ namespace Maths
 	constexpr float CUBE_ROOT2 = 1.2599210498f;
 	constexpr float GOLDEN_RATIO = 1.6180339887f;
 	constexpr float LN2 = 0.6931471805f;
+	constexpr float EPS = 1e-5f;
+	constexpr float APPROX_EPS = 0.0005f;
 }

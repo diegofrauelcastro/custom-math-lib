@@ -157,13 +157,13 @@ Vector4 Vector4::operator+(const float _f) const
 
 Vector4& Vector4::operator+=(const Vector4& _v)
 {
-	Add(_v);
+	AddEmplace(_v);
 	return *this;
 }
 
 Vector4& Vector4::operator-=(const Vector4& _v)
 {
-	Add(-_v);
+	AddEmplace(-_v);
 	return *this;
 }
 
@@ -268,7 +268,7 @@ Vector4 Vector4::ElementWiseProduct(const Vector4& _v) const
 
 float Vector4::GetMagnitude() const
 {
-	return sqrt(SquaredNorm());
+	return sqrt(x*x + y*y + z*z + w*w);
 }
 
 float Vector4::Norm() const
@@ -276,12 +276,9 @@ float Vector4::Norm() const
 	return GetMagnitude();
 }
 
-float Vector4::SquaredNorm(bool _homogenize) const
+float Vector4::SquaredNorm() const
 {
-	Vector4 tempV = *this;
-	if (_homogenize)
-		tempV.Homogenize();
-	return tempV.x * tempV.x + tempV.y * tempV.y + tempV.z * tempV.z;
+	return x*x + y*y + z*z + w*w;
 }
 
 Vector4 Vector4::Add(const Vector4& _v) const

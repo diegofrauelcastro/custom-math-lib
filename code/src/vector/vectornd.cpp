@@ -45,28 +45,28 @@ float VectorND::operator[](unsigned int _index) const
 VectorND VectorND::operator+(const float _f) const
 {
 	VectorND res(*this);
-	for (float val : res.values)
-		val += _f;
+	for (int i = 0; i < numDimension; i++)
+		res.values[i] += _f;
 	return res;
 }
 
 VectorND& VectorND::operator+=(const VectorND& _v)
 {
-	Add(_v);
+	AddEmplace(_v);
 	return *this;
 }
 
 VectorND& VectorND::operator-=(const VectorND& _v)
 {
-	Add(-_v);
+	AddEmplace(-_v);
 	return *this;
 }
 
 VectorND VectorND::operator-() const
 {
 	VectorND res(*this);
-	for (float val : res.values)
-		val = -val;
+	for (int i = 0; i < numDimension; i++)
+		res.values[i] = -values[i];
 	return res;
 }
 
@@ -85,16 +85,16 @@ VectorND VectorND::operator/(float _f) const
 {
 	assert(fabs(_f) > 0.000001f);
 	VectorND res(*this);
-	for (float val : res.values)
-		val /= _f;
+	for (unsigned int i = 0; i < numDimension; i++)
+		res.values[i] /= _f;
 	return res;
 }
 
 VectorND& VectorND::operator/=(float _f)
 {
 	assert(fabs(_f) > 0.000001f);
-	for (float val : values)
-		val /= _f;
+	for (unsigned int i = 0; i < numDimension; i++)
+		values[i] /= _f;
 	return *this;
 }
 
@@ -103,8 +103,8 @@ void VectorND::operator++(int _i)
 	(void)_i;
 	float length = GetMagnitude();
 	assert(fabs(length) > 0.000001f);
-	for (float val : values)
-		val *= (length + 1) / length;
+	for (unsigned int i = 0; i < numDimension; i++)
+		values[i] *= (length + 1) / length;
 }
 
 void VectorND::operator--(int _i)
@@ -112,8 +112,8 @@ void VectorND::operator--(int _i)
 	(void)_i;
 	float length = GetMagnitude();
 	assert(fabs(length) > 0.000001f);
-	for (float val : values)
-		val *= (length - 1) / length;
+	for (unsigned int i = 0; i < numDimension; i++)
+		values[i] *= (length - 1) / length;
 }
 
 float VectorND::operator*(const VectorND& _v) const
@@ -177,8 +177,8 @@ float VectorND::GetMagnitude() const
 float VectorND::SquaredNorm() const
 {
 	float res = 0;
-	for (float val : values)
-		res += val * val;
+	for (unsigned int i = 0; i < numDimension; i++)
+		res += values[i] * values[i];
 	return res;
 }
 
@@ -224,8 +224,8 @@ VectorND VectorND::Normalized() const
 	VectorND res = *this;
 	float length = GetMagnitude();
 	assert(fabs(length) > 0.000001f);
-	for (float val : res.values)
-		val /= length;
+	for (unsigned int i = 0; i < numDimension; i++)
+		res.values[i] /= length;
 	return res;
 }
 
@@ -233,8 +233,8 @@ VectorND& VectorND::Normalize()
 {
 	float length = GetMagnitude();
 	assert(fabs(length) > 0.000001f);
-	for (float val : values)
-		val *= (length - 1) / length;
+	for (unsigned int i = 0; i < numDimension; i++)
+		values[i] /= length;
 	return *this;
 }
 

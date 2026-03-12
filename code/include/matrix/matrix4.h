@@ -16,6 +16,7 @@ namespace Maths
 		Matrix4();
 		Matrix4(float _m[16]);
 		Matrix4(const Vector4& _line1, const Vector4& _line2, const Vector4& _line3, const Vector4& _line4);
+		Matrix4(const Matrix4& _copy);
 		// Destructor
 		~Matrix4() = default;
 
@@ -47,22 +48,22 @@ namespace Maths
 		Matrix4 Multiplied(const Matrix4& _m2) const;
 		Matrix4& Multiply(const Matrix4& _m2);
 		Vector4 Multiply(const Vector4& _v2) const;
-		Matrix4 GaussJordan() const;
-		Matrix4& GaussJordanEmplace();
+		Matrix4 GaussJordan() const;		// REMAINS UNTESTED
+		Matrix4& GaussJordanEmplace();		// REMAINS UNTESTED
 		Matrix4& Inverse();
 		Matrix4 Inversed() const;
 
 		// Static methods
 		static Matrix4 Identity();
-		static Matrix4 CreateTransformMatrix(const Vector3& _position, const Vector3& _rotationDeg, const Vector3& _scale);
+		static Matrix4 CreateTransformMatrix(const Vector3& _position, const Vector3& _rotationDeg, const Vector3& _scale);		// REMAINS UNTESTED
 		static Matrix4 CreateTranslationMatrix(const Vector3& _translation);
 		static Matrix4 CreateScaleMatrix(const Vector3& _scale);
-		static Matrix4 CreateXRotationMatrix(float _angleDeg);
-		static Matrix4 CreateYRotationMatrix(float _angleDeg);
-		static Matrix4 CreateZRotationMatrix(float _angleDeg);
-		static Vector3 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector3& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));
-		static Vector4 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector4& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));
-		static Matrix4 GetPerspectiveMatrix(unsigned int _width, unsigned int _height, float _near, float _far, float _fovYDeg);
+		static Matrix4 CreateXRotationMatrix(float _angleDeg);		// REMAINS UNTESTED
+		static Matrix4 CreateYRotationMatrix(float _angleDeg);		// REMAINS UNTESTED
+		static Matrix4 CreateZRotationMatrix(float _angleDeg);		// REMAINS UNTESTED
+		static Vector3 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector3& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));	// REMAINS UNTESTED
+		static Vector4 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector4& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));	// REMAINS UNTESTED
+		static Matrix4 GetPerspectiveMatrix(unsigned int _width, unsigned int _height, float _near, float _far, float _fovYDeg);					// REMAINS UNTESTED
 	};
 
 	std::ostream& operator<<(std::ostream& _os, const Matrix4& _m);

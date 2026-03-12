@@ -113,7 +113,7 @@ float Matrix3::GetTrace() const
 
 float Matrix3::Det() const
 {
-	float det1 = m[4] * m[5] - m[5] * m[7];
+	float det1 = m[4] * m[8] - m[5] * m[7];
 	float det2 = m[3] * m[8] - m[5] * m[6];
 	float det3 = m[3] * m[7] - m[4] * m[6];
 	return m[0] * det1 - m[1] * det2 + m[2] * det3;

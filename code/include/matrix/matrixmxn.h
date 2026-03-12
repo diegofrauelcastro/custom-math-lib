@@ -13,6 +13,9 @@ namespace Maths
 	class MatrixMxN
 	{
 	public:
+		// Public member
+		std::vector<float> matrix;
+
 		// Constructors
 		MatrixMxN() = delete;
 		MatrixMxN(unsigned int _m, unsigned int _n, float _f = 0.f);
@@ -52,17 +55,16 @@ namespace Maths
 		MatrixMxN Multiplied(const MatrixMxN& _m2) const;
 		MatrixMxN& Multiply(const MatrixMxN& _m2);
 		VectorND Multiply(const VectorND& _v2) const;
-		MatrixMxN GaussJordan() const;
-		MatrixMxN& GaussJordanEmplace();
-		MatrixMxN& Augment(const MatrixMxN& _other);
-		MatrixMxN Augmented(const MatrixMxN& _other) const;
-		MatrixMxN& Inverse();
-		MatrixMxN Inversed() const;
+		MatrixMxN GaussJordan() const;		// REMAINS UNTESTED
+		MatrixMxN& GaussJordanEmplace();	// REMAINS UNTESTED
+		MatrixMxN& Augment(const MatrixMxN& _other);			// REMAINS UNTESTED
+		MatrixMxN Augmented(const MatrixMxN& _other) const;		// REMAINS UNTESTED
+		MatrixMxN& Inverse();									// REMAINS UNTESTED
+		MatrixMxN Inversed() const;								// REMAINS UNTESTED
 
 		static MatrixMxN Identity(unsigned int _m);
 	private:
 		// Private member
-		std::vector<float> matrix;
 		unsigned int m;
 		unsigned int n;
 	};

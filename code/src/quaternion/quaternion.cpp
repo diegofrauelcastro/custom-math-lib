@@ -166,13 +166,13 @@ Quaternion Quaternion::operator+(const float _f) const
 
 Quaternion& Quaternion::operator+=(const Quaternion& _v)
 {
-	Add(_v);
+	AddEmplace(_v);
 	return *this;
 }
 
 Quaternion& Quaternion::operator-=(const Quaternion& _v)
 {
-	Add(-_v);
+	AddEmplace(-_v);
 	return *this;
 }
 
@@ -388,6 +388,7 @@ Quaternion& Quaternion::Normalize()
 		x /= length;
 		y /= length;
 		z /= length;
+		w /= length;
 	}
 	else
 		*this = Quaternion::zero;

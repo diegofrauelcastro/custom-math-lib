@@ -134,13 +134,13 @@ Vector3 Vector3::operator+(const float _f) const
 
 Vector3& Vector3::operator+=(const Vector3& _v)
 {
-	Add(_v);
+	AddEmplace(_v);
 	return *this;
 }
 
 Vector3& Vector3::operator-=(const Vector3& _v)
 {
-	Add(-_v);
+	AddEmplace(-_v);
 	return *this;
 }
 

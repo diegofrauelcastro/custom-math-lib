@@ -62,7 +62,7 @@ namespace Maths
 		Vector4 ElementWiseProduct(const Vector4& _v) const;
 		float GetMagnitude() const;
 		float Norm() const;
-		float SquaredNorm(bool _homogenize = false) const;
+		float SquaredNorm() const;
 
 		Vector4 Add(const Vector4& _v) const;
 		Vector4& AddEmplace(const Vector4& _v);

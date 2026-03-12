@@ -49,14 +49,14 @@ namespace Maths
 		Matrix2 Multiplied(const Matrix2& _m2) const;
 		Matrix2& Multiply(const Matrix2& _m2);
 		Vector2 Multiply(const Vector2& _v2) const;
-		Matrix2 GaussJordan() const;
-		Matrix2& GaussJordanEmplace();
+		Matrix2 GaussJordan() const;		// REMAINS UNTESTED
+		Matrix2& GaussJordanEmplace();		// REMAINS UNTESTED
 
 		// Static methods
 		static Matrix2 Identity();
 		static Matrix2 CreateScaleMatrix(const Vector2& _scale);
 		static Matrix2 CreateRotationMatrix(float _angleDeg);
-		static Vector2 RotatePointAroundAnchor(float _angleDeg, const Vector2& _p, const Vector2& _anchor = Vector2(0.f, 0.f));
+		static Vector2 RotatePointAroundAnchor(float _angleDeg, const Vector2& _p, const Vector2& _anchor = Vector2(0.f, 0.f));	// REMAINS UNTESTED
 	};
 
 	std::ostream& operator<<(std::ostream& _os, const Matrix2& _m);
