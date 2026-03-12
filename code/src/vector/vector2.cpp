@@ -115,13 +115,13 @@ Vector2 Vector2::operator+(const float _f) const
 
 Vector2& Vector2::operator+=(const Vector2& _v)
 {
-	Add(_v);
+	AddEmplace(_v);
 	return *this;
 }
 
 Vector2& Vector2::operator-=(const Vector2& _v)
 {
-	Add(-_v);
+	AddEmplace(-_v);
 	return *this;
 }
 
@@ -294,8 +294,9 @@ Vector2 Vector2::Rotated(float _angleDeg, const Vector2& _origin) const
 Vector2& Vector2::Rotate(float _angleDeg, const Vector2& _origin)
 {
 	_angleDeg *= DEG2RAD;
-	x = cosf(_angleDeg) * (x - _origin.x) - sinf(_angleDeg) * (y - _origin.y) + _origin.x;
-	y = sinf(_angleDeg) * (x - _origin.x) + cosf(_angleDeg) * (y - _origin.y) + _origin.y;
+	float oldX = x; float oldY = y;
+	x = cosf(_angleDeg) * (oldX - _origin.x) - sinf(_angleDeg) * (oldY - _origin.y) + _origin.x;
+	y = sinf(_angleDeg) * (oldX - _origin.x) + cosf(_angleDeg) * (oldY - _origin.y) + _origin.y;
 	return *this;
 }
 
