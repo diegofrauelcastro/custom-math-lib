@@ -38,6 +38,7 @@ namespace Maths
 		float GetTrace() const;
 		float Det() const;
 		Matrix4 GetOpposite() const;
+		bool IsOrthogonal() const;
 
 		Matrix4 Transposed() const;
 		Matrix4& Transpose();

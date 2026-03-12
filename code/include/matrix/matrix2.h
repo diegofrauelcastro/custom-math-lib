@@ -56,7 +56,7 @@ namespace Maths
 		static Matrix2 Identity();
 		static Matrix2 CreateScaleMatrix(const Vector2& _scale);
 		static Matrix2 CreateRotationMatrix(float _angleDeg);
-		static Vector2 RotatePointAroundAnchor(float _angleDeg, const Vector2& _p, const Vector2& _anchor = Vector2(0.f, 0.f));	// REMAINS UNTESTED
+		static Vector2 RotatePointAroundAnchor(float _angleDeg, const Vector2& _p, const Vector2& _anchor = Vector2(0.f, 0.f));
 	};
 
 	std::ostream& operator<<(std::ostream& _os, const Matrix2& _m);

@@ -107,6 +107,23 @@ Matrix4 Matrix4::GetOpposite() const
 	return tempM;
 }
 
+bool Maths::Matrix4::IsOrthogonal() const
+{
+	Matrix4 selfTimesTransposed = Multiplied(Transposed());
+
+	bool hasFoundItemOutofPlace = false;
+	for (int i = 0; i < 16; i++)
+	{
+		if ((i % 5) == 0)
+			hasFoundItemOutofPlace |= fabs(selfTimesTransposed.m[i] - 1.f) > 0.0001f;
+		else
+			hasFoundItemOutofPlace |= fabs(selfTimesTransposed.m[i]) > 0.0001f;
+		if (hasFoundItemOutofPlace) break;
+	}
+
+	return !hasFoundItemOutofPlace;
+}
+
 float Matrix4::Det() const
 {
 	float line1 = m[3]*m[6]*m[9]*m[12]  + m[0]*m[5]*m[10]*m[15] - m[0]*m[5]*m[11]*m[14] - m[0]*m[6]*m[9] *m[15]  ;
