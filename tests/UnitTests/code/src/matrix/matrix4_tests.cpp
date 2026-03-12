@@ -240,6 +240,29 @@ TEST(Matrix4, Scale)
     ExpectMatrix4Near(mManualResult, mRes);
 }
 
+TEST(Matrix4, IsOrthogonal)
+{
+    // Identity matrix
+    Matrix4 I = Matrix4::Identity();
+    EXPECT_TRUE(I.IsOrthogonal());
+
+    // Pure rotation: 90° around Z
+    Matrix4 R = Matrix4::CreateZRotationMatrix(90.f);
+    EXPECT_TRUE(R.IsOrthogonal());
+
+    // Uniform scale (scale factor 2)
+    Matrix4 S = Matrix4::CreateScaleMatrix({ 2.f, 2.f, 2.f });
+    EXPECT_FALSE(S.IsOrthogonal());
+
+    // Non-uniform scale
+    Matrix4 NS = Matrix4::CreateScaleMatrix({ 2.f, 3.f, 1.f });
+    EXPECT_FALSE(NS.IsOrthogonal());
+
+    // Rotation + non-uniform scale
+    Matrix4 RNS = R * NS;
+    EXPECT_FALSE(RNS.IsOrthogonal());
+}
+
 TEST(Matrix4, MultiplyByMatOperator)
 {
     Matrix4 m1;

@@ -135,6 +135,50 @@ TEST(Matrix2, Determinant)
     EXPECT_FLOAT_EQ(det, m1.Det());
 }
 
+TEST(Matrix2, RotatePointAroundAnchor)
+{
+    using namespace Maths;
+
+    // Test 1: Rotate around origin
+    Vector2 p1(1.f, 0.f);
+
+    // 90 degrees around origin
+    Vector2 r90 = Matrix2::RotatePointAroundAnchor(90.f, p1);
+    EXPECT_NEAR(r90.x, 0.f, EPS);
+    EXPECT_NEAR(r90.y, 1.f, EPS);
+
+    // 180 degrees around origin
+    Vector2 r180 = Matrix2::RotatePointAroundAnchor(180.f, p1);
+    EXPECT_NEAR(r180.x, -1.f, EPS);
+    EXPECT_NEAR(r180.y, 0.f, EPS);
+
+    // 360 degrees around origin
+    Vector2 r360 = Matrix2::RotatePointAroundAnchor(360.f, p1);
+    EXPECT_NEAR(r360.x, 1.f, EPS);
+    EXPECT_NEAR(r360.y, 0.f, EPS);
+
+    // Test 2: Rotate around a custom anchor
+    Vector2 anchor(2.f, 2.f);
+    Vector2 p2(3.f, 2.f); // 1 unit to the right of anchor
+
+    // 90 degrees rotation
+    Vector2 rotated = Matrix2::RotatePointAroundAnchor(90.f, p2, anchor);
+
+    // After rotation, should be 1 unit above anchor
+    EXPECT_NEAR(rotated.x, 2.f, EPS);
+    EXPECT_NEAR(rotated.y, 3.f, EPS);
+
+    // Check distance to anchor is preserved
+    float distBefore = Vector2::Distance(p2, anchor);
+    float distAfter = Vector2::Distance(rotated, anchor);
+    EXPECT_NEAR(distBefore, distAfter, EPS);
+
+    // 0 degree rotation.
+    Vector2 r0 = Matrix2::RotatePointAroundAnchor(0.f, p2, anchor);
+    EXPECT_NEAR(r0.x, p2.x, EPS);
+    EXPECT_NEAR(r0.y, p2.y, EPS);
+}
+
 TEST(Matrix2, CopyOperator)
 {
     Matrix2 m1;
