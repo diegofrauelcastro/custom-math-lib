@@ -27,4 +27,5 @@ namespace Maths
 	constexpr float GOLDEN_RATIO = 1.6180339887f;
 	constexpr float LN2 = 0.6931471805f;
 	constexpr float EPS = 1e-5f;
+	constexpr float APPROX_EPS = 0.0005f;
 }

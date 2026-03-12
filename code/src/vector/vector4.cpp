@@ -157,13 +157,13 @@ Vector4 Vector4::operator+(const float _f) const
 
 Vector4& Vector4::operator+=(const Vector4& _v)
 {
-	Add(_v);
+	AddEmplace(_v);
 	return *this;
 }
 
 Vector4& Vector4::operator-=(const Vector4& _v)
 {
-	Add(-_v);
+	AddEmplace(-_v);
 	return *this;
 }
 

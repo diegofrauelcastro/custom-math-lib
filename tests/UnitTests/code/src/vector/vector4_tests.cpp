@@ -38,33 +38,6 @@ TEST(Vector4, Constructors)
 	EXPECT_FLOAT_EQ(v5.w, 2.f);
 }
 
-TEST(Vector4, AssignmentOperator)
-{
-	Vector4 v1(1.f, 2.f, 3.f, 4.f);
-	Vector4 v2;
-
-	v2 = v1;
-
-	EXPECT_FLOAT_EQ(v2.x, 1.f);
-	EXPECT_FLOAT_EQ(v2.y, 2.f);
-	EXPECT_FLOAT_EQ(v2.z, 3.f);
-	EXPECT_FLOAT_EQ(v2.w, 4.f);
-}
-
-TEST(Vector4, BracketOperator)
-{
-	Vector4 v(1.f, 2.f, 3.f, 4.f);
-
-	EXPECT_FLOAT_EQ(v[0], 1.f);
-	EXPECT_FLOAT_EQ(v[1], 2.f);
-	EXPECT_FLOAT_EQ(v[2], 3.f);
-	EXPECT_FLOAT_EQ(v[3], 4.f);
-
-	v[2] = 10.f;
-
-	EXPECT_FLOAT_EQ(v[2], 10.f);
-}
-
 TEST(Vector4, Add)
 {
 	Vector4 v1(1.f, 2.f, 3.f, 4.f);
@@ -224,6 +197,204 @@ TEST(Vector4, Distance)
 	EXPECT_FLOAT_EQ(d, 5.f);
 }
 
+// OPERATORS
+
+TEST(Vector4, OperatorPlusVector)
+{
+	Vector4 v1(1.f, 2.f, 3.f, 4.f);
+	Vector4 v2(4.f, 3.f, 2.f, 1.f);
+
+	Vector4 res = v1 + v2;
+
+	EXPECT_FLOAT_EQ(res.x, 5.f);
+	EXPECT_FLOAT_EQ(res.y, 5.f);
+	EXPECT_FLOAT_EQ(res.z, 5.f);
+	EXPECT_FLOAT_EQ(res.w, 5.f);
+}
+
+TEST(Vector4, OperatorMinusVector)
+{
+	Vector4 v1(5.f, 6.f, 7.f, 8.f);
+	Vector4 v2(1.f, 2.f, 3.f, 4.f);
+
+	Vector4 res = v1 - v2;
+
+	EXPECT_FLOAT_EQ(res.x, 4.f);
+	EXPECT_FLOAT_EQ(res.y, 4.f);
+	EXPECT_FLOAT_EQ(res.z, 4.f);
+	EXPECT_FLOAT_EQ(res.w, 4.f);
+}
+
+TEST(Vector4, OperatorPlusScalar)
+{
+	Vector4 v(1.f, 2.f, 3.f, 4.f);
+
+	Vector4 res = v + 2.f;
+
+	EXPECT_FLOAT_EQ(res.x, 3.f);
+	EXPECT_FLOAT_EQ(res.y, 4.f);
+	EXPECT_FLOAT_EQ(res.z, 5.f);
+	EXPECT_FLOAT_EQ(res.w, 6.f);
+}
+
+TEST(Vector4, OperatorScalarPlusVector)
+{
+	Vector4 v(1.f, 2.f, 3.f, 4.f);
+
+	Vector4 res = 2.f + v;
+
+	EXPECT_FLOAT_EQ(res.x, 3.f);
+	EXPECT_FLOAT_EQ(res.y, 4.f);
+	EXPECT_FLOAT_EQ(res.z, 5.f);
+	EXPECT_FLOAT_EQ(res.w, 6.f);
+}
+
+TEST(Vector4, OperatorMinusScalar)
+{
+	Vector4 v(5.f, 6.f, 7.f, 8.f);
+
+	Vector4 res = 2.f - v;
+
+	EXPECT_FLOAT_EQ(res.x, -3.f);
+	EXPECT_FLOAT_EQ(res.y, -4.f);
+	EXPECT_FLOAT_EQ(res.z, -5.f);
+	EXPECT_FLOAT_EQ(res.w, -6.f);
+}
+
+TEST(Vector4, OperatorUnaryMinus)
+{
+	Vector4 v(1.f, -2.f, 3.f, -4.f);
+
+	Vector4 res = -v;
+
+	EXPECT_FLOAT_EQ(res.x, -1.f);
+	EXPECT_FLOAT_EQ(res.y, 2.f);
+	EXPECT_FLOAT_EQ(res.z, -3.f);
+	EXPECT_FLOAT_EQ(res.w, 4.f);
+}
+
+TEST(Vector4, OperatorMultiplyScalar)
+{
+	Vector4 v(1.f, 2.f, 3.f, 4.f);
+
+	Vector4 res = v * 3.f;
+
+	EXPECT_FLOAT_EQ(res.x, 3.f);
+	EXPECT_FLOAT_EQ(res.y, 6.f);
+	EXPECT_FLOAT_EQ(res.z, 9.f);
+	EXPECT_FLOAT_EQ(res.w, 12.f);
+}
+
+TEST(Vector4, OperatorScalarMultiplyVector)
+{
+	Vector4 v(1.f, 2.f, 3.f, 4.f);
+
+	Vector4 res = 3.f * v;
+
+	EXPECT_FLOAT_EQ(res.x, 3.f);
+	EXPECT_FLOAT_EQ(res.y, 6.f);
+	EXPECT_FLOAT_EQ(res.z, 9.f);
+	EXPECT_FLOAT_EQ(res.w, 12.f);
+}
+
+TEST(Vector4, OperatorDivideScalar)
+{
+	Vector4 v(6.f, 8.f, 10.f, 12.f);
+
+	Vector4 res = v / 2.f;
+
+	EXPECT_FLOAT_EQ(res.x, 3.f);
+	EXPECT_FLOAT_EQ(res.y, 4.f);
+	EXPECT_FLOAT_EQ(res.z, 5.f);
+	EXPECT_FLOAT_EQ(res.w, 6.f);
+}
+
+TEST(Vector4, OperatorScalarDivideVector)
+{
+	Vector4 v(1.f, 2.f, 4.f, 8.f);
+
+	Vector4 res = 8.f / v;
+
+	EXPECT_FLOAT_EQ(res.x, 8.f);
+	EXPECT_FLOAT_EQ(res.y, 4.f);
+	EXPECT_FLOAT_EQ(res.z, 2.f);
+	EXPECT_FLOAT_EQ(res.w, 1.f);
+}
+
+TEST(Vector4, OperatorPlusEqual)
+{
+	Vector4 v1(1.f, 2.f, 3.f, 4.f);
+	Vector4 v2(2.f, 3.f, 4.f, 5.f);
+
+	v1 += v2;
+
+	EXPECT_FLOAT_EQ(v1.x, 3.f);
+	EXPECT_FLOAT_EQ(v1.y, 5.f);
+	EXPECT_FLOAT_EQ(v1.z, 7.f);
+	EXPECT_FLOAT_EQ(v1.w, 9.f);
+}
+
+TEST(Vector4, OperatorMinusEqual)
+{
+	Vector4 v1(5.f, 6.f, 7.f, 8.f);
+	Vector4 v2(1.f, 2.f, 3.f, 4.f);
+
+	v1 -= v2;
+
+	EXPECT_FLOAT_EQ(v1.x, 4.f);
+	EXPECT_FLOAT_EQ(v1.y, 4.f);
+	EXPECT_FLOAT_EQ(v1.z, 4.f);
+	EXPECT_FLOAT_EQ(v1.w, 4.f);
+}
+
+TEST(Vector4, OperatorMultiplyEqual)
+{
+	Vector4 v(1.f, 2.f, 3.f, 4.f);
+
+	v *= 2.f;
+
+	EXPECT_FLOAT_EQ(v.x, 2.f);
+	EXPECT_FLOAT_EQ(v.y, 4.f);
+	EXPECT_FLOAT_EQ(v.z, 6.f);
+	EXPECT_FLOAT_EQ(v.w, 8.f);
+}
+
+TEST(Vector4, OperatorDivideEqual)
+{
+	Vector4 v(6.f, 8.f, 10.f, 12.f);
+
+	v /= 2.f;
+
+	EXPECT_FLOAT_EQ(v.x, 3.f);
+	EXPECT_FLOAT_EQ(v.y, 4.f);
+	EXPECT_FLOAT_EQ(v.z, 5.f);
+	EXPECT_FLOAT_EQ(v.w, 6.f);
+}
+
+TEST(Vector4, OperatorIncrement)
+{
+	Vector4 v(1.f, 2.f, 3.f, 4.f);
+
+	v++;
+
+	EXPECT_FLOAT_EQ(v.x, 2.f);
+	EXPECT_FLOAT_EQ(v.y, 3.f);
+	EXPECT_FLOAT_EQ(v.z, 4.f);
+	EXPECT_FLOAT_EQ(v.w, 5.f);
+}
+
+TEST(Vector4, OperatorDecrement)
+{
+	Vector4 v(1.f, 2.f, 3.f, 4.f);
+
+	v--;
+
+	EXPECT_FLOAT_EQ(v.x, 0.f);
+	EXPECT_FLOAT_EQ(v.y, 1.f);
+	EXPECT_FLOAT_EQ(v.z, 2.f);
+	EXPECT_FLOAT_EQ(v.w, 3.f);
+}
+
 TEST(Vector4, ComparisonOperators)
 {
 	Vector4 v1(1, 2, 3, 4);
@@ -243,4 +414,31 @@ TEST(Vector4, Print)
 	Vector4 v(1.f, 2.f, 3.f, 4.f);
 
 	std::cout << v << std::endl;
+}
+
+TEST(Vector4, AssignmentOperator)
+{
+	Vector4 v1(1.f, 2.f, 3.f, 4.f);
+	Vector4 v2;
+
+	v2 = v1;
+
+	EXPECT_FLOAT_EQ(v2.x, 1.f);
+	EXPECT_FLOAT_EQ(v2.y, 2.f);
+	EXPECT_FLOAT_EQ(v2.z, 3.f);
+	EXPECT_FLOAT_EQ(v2.w, 4.f);
+}
+
+TEST(Vector4, BracketOperator)
+{
+	Vector4 v(1.f, 2.f, 3.f, 4.f);
+
+	EXPECT_FLOAT_EQ(v[0], 1.f);
+	EXPECT_FLOAT_EQ(v[1], 2.f);
+	EXPECT_FLOAT_EQ(v[2], 3.f);
+	EXPECT_FLOAT_EQ(v[3], 4.f);
+
+	v[2] = 10.f;
+
+	EXPECT_FLOAT_EQ(v[2], 10.f);
 }
