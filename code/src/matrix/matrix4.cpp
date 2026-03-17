@@ -423,22 +423,3 @@ Vector4 Matrix4::RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Ve
 	Matrix4 rotMatAroundAnchor = matTranslate * rotMatOrigin * matTranslateInverse;
 	return rotMatAroundAnchor * _p;
 }
-
-Matrix4 Matrix4::GetPerspectiveMatrix(unsigned int _width, unsigned int _height, float _near, float _far, float _fovYDeg) 
-{
-	Matrix4 result;
-
-	float q = 1.0f / tan(0.5f * _fovYDeg * DEG2RAD);
-	float a = q / ((float)_width/_height);
-
-	float b = (_near + _far) / (_near - _far);
-	float c = (2.0f * _near * _far) / (_near - _far);
-
-	result[0] = a;
-	result[5] = q;
-	result[10] = b;
-	result[14] = -1.0f;
-	result[11] = c;
-
-	return result;
-}
