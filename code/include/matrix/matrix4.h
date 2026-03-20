@@ -64,7 +64,6 @@ namespace Maths
 		static Matrix4 CreateZRotationMatrix(float _angleDeg);		// REMAINS UNTESTED
 		static Vector3 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector3& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));	// REMAINS UNTESTED
 		static Vector4 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector4& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));	// REMAINS UNTESTED
-		static Matrix4 GetPerspectiveMatrix(unsigned int _width, unsigned int _height, float _near, float _far, float _fovYDeg);					// REMAINS UNTESTED
 	};
 
 	std::ostream& operator<<(std::ostream& _os, const Matrix4& _m);
