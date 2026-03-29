@@ -13,7 +13,7 @@ file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS "code/include/*.h")
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
 
 target_include_directories(${PROJECT_NAME}
-    PUBLIC ${CMAKE_SOURCE_DIR}/code/include
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/code/include
 )
 
 ####### TEST SETUP #######
