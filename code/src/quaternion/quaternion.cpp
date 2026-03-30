@@ -6,6 +6,7 @@
 #include <math.h>
 #include <string>
 #include <cassert>
+#include <cmath>
 
 using namespace Maths;
 

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <ostream>
 #include <sstream>
+#include <cmath>
 
 using namespace Maths;
 

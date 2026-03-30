@@ -15,6 +15,8 @@
 // Quaternions
 #include "quaternion/quaternion.h"
 
+#include <cmath>
+
 namespace Maths
 {
 	constexpr float PI = 3.141592653589793f;

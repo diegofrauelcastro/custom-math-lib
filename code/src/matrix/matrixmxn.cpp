@@ -8,6 +8,7 @@
 #include <iostream>
 #include <ostream>
 #include <sstream>
+#include <cmath>
 
 using namespace Maths;
 
@@ -19,8 +20,8 @@ MatrixMxN::MatrixMxN(unsigned int _m, unsigned int _n, float _f)
 }
 
 MatrixMxN::MatrixMxN(Maths::Vector2 _dimensions, float _f)
-	: m(unsigned int (_dimensions.x))
-	, n(unsigned int (_dimensions.y))
+	: m(unsigned(_dimensions.x))
+	, n(unsigned(_dimensions.y))
 {
 	matrix = std::vector<float>(m * n, _f);
 }
