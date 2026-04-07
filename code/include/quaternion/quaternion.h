@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vector/vector3.h"
+#include "matrix/matrix4.h"
 
 #include <string>
 
@@ -77,7 +78,7 @@ namespace Maths
 		Quaternion& Conjugate();
 		Quaternion Inversed() const;
 		Quaternion& Inverse();
-
+		Matrix4 ToRotationMatrix() const;
 		Vector3 RotateVec3(const Vector3& _v) const;
 		Vector3 VectorXYZ() const;
 

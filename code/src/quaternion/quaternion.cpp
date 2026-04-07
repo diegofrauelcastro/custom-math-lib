@@ -310,6 +310,39 @@ Quaternion& Quaternion::Inverse()
 	return *this;
 }
 
+Matrix4 Maths::Quaternion::ToRotationMatrix() const
+{
+	Matrix4 rotationMatrix;
+	float xx = x * x;
+	float yy = y * y;
+	float zz = z * z;
+	float xy = x * y;
+	float xz = x * z;
+	float yz = y * z;
+
+	rotationMatrix[0] = 1 - 2 * (yy + zz);
+	rotationMatrix[1] = 2 * (xy - z * w);
+	rotationMatrix[2] = 2 * (xz + y * w);
+	rotationMatrix[3] = 0;
+
+	rotationMatrix[4] = 2 * (xy + z * w);
+	rotationMatrix[5] = 1 - 2 * (xx + zz);
+	rotationMatrix[6] = 2 * (yz - x * w);
+	rotationMatrix[7] = 0;
+		
+	rotationMatrix[8] = 2 * (xz - y * w);
+	rotationMatrix[9] = 2 * (yz + x * w);
+	rotationMatrix[10] = 1 - 2 * (xx + yy);
+	rotationMatrix[11] = 0;
+
+	rotationMatrix[12] = 0;
+	rotationMatrix[13] = 0;
+	rotationMatrix[14] = 0;
+	rotationMatrix[15] = 1;
+
+	return rotationMatrix;
+}
+
 float Quaternion::GetMagnitude() const
 {
 	return sqrt(x * x + y * y + z * z + w * w);
