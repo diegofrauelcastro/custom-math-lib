@@ -262,3 +262,18 @@ TEST(Quaternion, Print)
 
 	std::cout << q << std::endl;
 }
+
+TEST(Quaternion, ToRotationMatrix)
+{
+	Quaternion q(Vector3(0, 0, 1), 90.f);
+	Matrix4 m = q.ToRotationMatrix();
+	EXPECT_NEAR(m[0], 0.f, EPS);
+	EXPECT_NEAR(m[1], -1.f, EPS);
+	EXPECT_NEAR(m[2], 0.f, EPS);
+	EXPECT_NEAR(m[4], 1.f, EPS);
+	EXPECT_NEAR(m[5], 0.f, EPS);
+	EXPECT_NEAR(m[6], 0.f, EPS);
+	EXPECT_NEAR(m[8], 0.f, EPS);
+	EXPECT_NEAR(m[9], 0.f, EPS);
+	EXPECT_NEAR(m[10], 1.f, EPS);
+}
