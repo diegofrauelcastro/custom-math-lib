@@ -1,6 +1,7 @@
 #include "math3dlib.h"
 
 #include "matrix/matrix4.h"
+#include "quaternion/quaternion.h"
 
 #include <vector>
 #include <cassert>
@@ -92,6 +93,11 @@ void Matrix4::SetAt(unsigned int _row, unsigned int _col, float _val)
 Vector4 Matrix4::GetDiagonal() const
 {
 	return Vector4(m[0], m[5], m[10], m[15]);
+}
+
+Vector3 Maths::Matrix4::GetTranslation() const
+{
+	return Vector3(m[3], m[7], m[11]);
 }
 
 float Matrix4::GetTrace() const
@@ -355,6 +361,13 @@ Matrix4 Matrix4::CreateTransformMatrix(const Vector3& _position, const Vector3& 
 	Matrix4 mRotationZ = CreateZRotationMatrix(_rotationDeg.z);
 	Matrix4 mScale = CreateScaleMatrix(_scale);
 	return mTranslate * mRotationY * mRotationX * mRotationZ * mScale;
+}
+
+Matrix4 Maths::Matrix4::CreateTransformMatrix(const Vector3& _position, const Quaternion& _rotation, const Vector3& _scale)
+{
+	Matrix4 mTranslate = CreateTranslationMatrix(_position);
+	Matrix4 mScale = CreateScaleMatrix(_scale);
+	return mTranslate * _rotation.ToRotationMatrix() * mScale;
 }
 
 Matrix4 Matrix4::CreateTranslationMatrix(const Vector3& _translation)

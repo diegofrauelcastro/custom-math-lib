@@ -6,6 +6,8 @@
 
 namespace Maths
 {
+	class Quaternion;
+
 	class Matrix4
 	{
 	public:
@@ -35,6 +37,7 @@ namespace Maths
 
 		// Public methods
 		Vector4 GetDiagonal() const;
+		Vector3 GetTranslation() const;
 		float GetTrace() const;
 		float Det() const;
 		Matrix4 GetOpposite() const;
@@ -56,14 +59,15 @@ namespace Maths
 
 		// Static methods
 		static Matrix4 Identity();
-		static Matrix4 CreateTransformMatrix(const Vector3& _position, const Vector3& _rotationDeg, const Vector3& _scale);		// REMAINS UNTESTED
+		static Matrix4 CreateTransformMatrix(const Vector3& _position, const Vector3& _rotationDeg, const Vector3& _scale);
+		static Matrix4 CreateTransformMatrix(const Vector3& _position, const Quaternion& _rotation, const Vector3& _scale);
 		static Matrix4 CreateTranslationMatrix(const Vector3& _translation);
 		static Matrix4 CreateScaleMatrix(const Vector3& _scale);
-		static Matrix4 CreateXRotationMatrix(float _angleDeg);		// REMAINS UNTESTED
-		static Matrix4 CreateYRotationMatrix(float _angleDeg);		// REMAINS UNTESTED
-		static Matrix4 CreateZRotationMatrix(float _angleDeg);		// REMAINS UNTESTED
-		static Vector3 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector3& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));	// REMAINS UNTESTED
-		static Vector4 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector4& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));	// REMAINS UNTESTED
+		static Matrix4 CreateXRotationMatrix(float _angleDeg);
+		static Matrix4 CreateYRotationMatrix(float _angleDeg);
+		static Matrix4 CreateZRotationMatrix(float _angleDeg);
+		static Vector3 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector3& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));
+		static Vector4 RotatePointAroundThreeAxis(Vector3& _anglesDegPerAxis, const Vector4& _p, const Vector3 _anchor = Vector3(0.f, 0.f, 0.f));
 	};
 
 	std::ostream& operator<<(std::ostream& _os, const Matrix4& _m);
