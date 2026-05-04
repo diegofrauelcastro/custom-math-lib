@@ -18,7 +18,7 @@ target_include_directories(${PROJECT_NAME}
 
 ####### TEST SETUP #######
 
-option(BUILD_TESTS "Build tests" OFF)
+option(BUILD_TESTS "Build tests" ON)
 
 if(BUILD_TESTS)
 

@@ -29,6 +29,25 @@ Quaternion::Quaternion(float _x, float _y, float _z, float _w)
 {
 }
 
+Maths::Quaternion::Quaternion(const Vector3& _eulerAngles)
+{
+	float halfZ = _eulerAngles.z * DEG2RAD / 2.f;
+	float halfY = _eulerAngles.y * DEG2RAD / 2.f;
+	float halfX = _eulerAngles.x * DEG2RAD / 2.f;
+
+	float cosZ = cosf(halfZ);
+	float sinZ = sinf(halfZ);
+	float cosY = cosf(halfY);
+	float sinY = sinf(halfY);
+	float cosX = cosf(halfX);
+	float sinX = sinf(halfX);
+
+	x = sinX * cosY * cosZ - cosX * sinY * sinZ;
+	y = cosX * sinY * cosZ + sinX * cosY * sinZ;
+	z = cosX * cosY * sinZ - sinX * sinY * cosZ;
+	w = cosX * cosY * cosZ + sinX * sinY * sinZ;
+}
+
 // Creates a quaternion representing a rotation of 'angle' degrees around 'axis'.
 Quaternion::Quaternion(const Vector3& _axis, float _angleDeg)
 {
