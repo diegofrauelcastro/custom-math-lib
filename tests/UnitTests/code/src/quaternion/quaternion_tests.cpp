@@ -277,3 +277,14 @@ TEST(Quaternion, ToRotationMatrix)
 	EXPECT_NEAR(m[9], 0.f, EPS);
 	EXPECT_NEAR(m[10], 1.f, EPS);
 }
+
+TEST(Quaternion, EulerAngles)
+{
+	Quaternion q(Vector3(45.f, 32.f, 67.f));
+
+	// Pre-calculated online, order is ZYX:
+	EXPECT_NEAR(q.x, 0.1661984f, EPS);
+	EXPECT_NEAR(q.y, 0.4153887f, EPS);
+	EXPECT_NEAR(q.z, 0.4022099f, EPS);
+	EXPECT_NEAR(q.w, 0.798785f, EPS);
+}
