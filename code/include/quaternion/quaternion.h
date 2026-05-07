@@ -7,6 +7,13 @@
 
 namespace Maths
 {
+	enum EEulerOrder
+	{
+		XYZ,
+		ZYX,
+		YXZ
+	};
+
 	class Quaternion
 	{
 	public:
@@ -23,7 +30,7 @@ namespace Maths
 		// Constructors
 		Quaternion();
 		Quaternion(float _x, float _y, float _z, float _w);
-		Quaternion(const Vector3& _eulerAngles);
+		Quaternion(const Vector3& _eulerAngles, EEulerOrder _order = XYZ);
 		Quaternion(const Vector3& _axis, float _angleDeg);
 		Quaternion(float _w, const Vector3& _v);
 		Quaternion(float _f);
