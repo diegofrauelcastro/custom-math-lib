@@ -29,11 +29,11 @@ Quaternion::Quaternion(float _x, float _y, float _z, float _w)
 {
 }
 
-Maths::Quaternion::Quaternion(const Vector3& _eulerAngles)
+Maths::Quaternion::Quaternion(const Vector3& _eulerAngles, EEulerOrder _order)
 {
-	float halfZ = _eulerAngles.z * DEG2RAD / 2.f;
-	float halfY = _eulerAngles.y * DEG2RAD / 2.f;
-	float halfX = _eulerAngles.x * DEG2RAD / 2.f;
+	float halfZ = _eulerAngles.z * DEG2RAD * 0.5f;
+	float halfY = _eulerAngles.y * DEG2RAD * 0.5f;
+	float halfX = _eulerAngles.x * DEG2RAD * 0.5f;
 
 	float cosZ = cosf(halfZ);
 	float sinZ = sinf(halfZ);
@@ -42,10 +42,33 @@ Maths::Quaternion::Quaternion(const Vector3& _eulerAngles)
 	float cosX = cosf(halfX);
 	float sinX = sinf(halfX);
 
-	x = sinX * cosY * cosZ - cosX * sinY * sinZ;
-	y = cosX * sinY * cosZ + sinX * cosY * sinZ;
-	z = cosX * cosY * sinZ - sinX * sinY * cosZ;
-	w = cosX * cosY * cosZ + sinX * sinY * sinZ;
+	switch (_order)
+	{
+	case EEulerOrder::XYZ:
+	{
+		x = sinX * cosY * cosZ + cosX * sinY * sinZ;
+		y = cosX * sinY * cosZ - sinX * cosY * sinZ;
+		z = cosX * cosY * sinZ + sinX * sinY * cosZ;
+		w = cosX * cosY * cosZ - sinX * sinY * sinZ;
+		break;
+	}
+	case EEulerOrder::ZYX:
+	{
+		x = sinX * cosY * cosZ - cosX * sinY * sinZ;
+		y = cosX * sinY * cosZ + sinX * cosY * sinZ;
+		z = cosX * cosY * sinZ - sinX * sinY * cosZ;
+		w = cosX * cosY * cosZ + sinX * sinY * sinZ;
+		break;
+	}
+	case EEulerOrder::YXZ:
+	{
+		x = sinX * cosY * cosZ + cosX * sinY * sinZ;
+		y = cosX * sinY * cosZ - sinX * cosY * sinZ;
+		z = cosX * cosY * sinZ - sinX * sinY * cosZ;
+		w = cosX * cosY * cosZ + sinX * sinY * sinZ;
+		break;
+	}
+	}
 }
 
 // Creates a quaternion representing a rotation of 'angle' degrees around 'axis'.
