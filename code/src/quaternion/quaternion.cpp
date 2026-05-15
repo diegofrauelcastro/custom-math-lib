@@ -313,6 +313,38 @@ Vector3 Quaternion::VectorXYZ() const
 	return Vector3(x, y, z);
 }
 
+Vector3 Quaternion::ToEuler() const
+{
+	Vector3 euler;
+	float sinp = 2.0f * (w * y - z * x);
+
+	// Case with gimble lock.
+	if (std::abs(sinp) >= 0.99999f)
+	{
+		// Set pitch to 90 or -90 degrees.
+		euler.x = std::copysign(PI * 0.5f, sinp);
+		euler.y = 2.0f * std::atan2(x, w);
+		euler.z = 0.0f;
+	}
+	// Case with no gimbal lock
+	else
+	{
+		// Z axis. (roll)
+		float sinr_cosp = 2.0f * (w * z + x * y);
+		float cosr_cosp = 1.0f - 2.0f * (y * y + z * z);
+		euler.z = std::atan2(sinr_cosp, cosr_cosp);
+
+		// X axis. (pitch)
+		euler.x = std::asin(sinp);
+
+		// Y axis. (yaw)
+		float siny_cosp = 2.0f * (w * x + y * z);
+		float cosy_cosp = 1.0f - 2.0f * (x * x + y * y);
+		euler.y = std::atan2(siny_cosp, cosy_cosp);
+	}
+	return euler * RAD2DEG;
+}
+
 Quaternion Quaternion::Product(const Quaternion& _v) const
 {
 	float newW = w * _v.w - x * _v.x - y * _v.y - z * _v.z;
