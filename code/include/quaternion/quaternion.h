@@ -89,6 +89,7 @@ namespace Maths
 		Matrix4 ToRotationMatrix() const;
 		Vector3 RotateVec3(const Vector3& _v) const;
 		Vector3 VectorXYZ() const;
+		Vector3 ToEuler() const;
 
 		// Static methods
 		static float Distance(const Quaternion& _p1, const Quaternion& _p2);
